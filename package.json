@@ -1,0 +1,27 @@
+{
+  "name": "Online-Programming-Test-Platform",
+  "version": "1.0.0",
+  "description": "软件工程课程设计——实现一个在线编程笔试平台",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Course-Design-Of-Software-Engineering/Online-Programming-Test-Platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Course-Design-Of-Software-Engineering/Online-Programming-Test-Platform/issues"
+  },
+  "homepage": "https://github.com/Course-Design-Of-Software-Engineering/Online-Programming-Test-Platform#readme",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "body-parse": "^0.1.0",
+    "express": "^4.17.1",
+    "express-art-template": "^1.0.1",
+    "mysql": "^2.18.1"
+  }
+}

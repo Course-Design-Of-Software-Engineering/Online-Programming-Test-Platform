@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+
+<body>
+    <ul class="clearfix">
+        <li><a href="/login"><span class="tab-reg"></span>登录</a></li>
+        <li><a href="/register"><span class="tab-reg"></span>注册</a></li>
+    </ul>
+
+
+    <form id="register-form">
+        <ul>
+            <li>
+                <label>邮箱/手机：</label>
+                <input type="text" name="email_phone" id="email_phone" placeholder="请输入邮箱/手机号码"/>
+            </li>
+            <li>
+                <label>密码：</label>
+                <input type="text" name="pwd" id="pwd" placeholder="请输入密码"/>
+            </li>
+            <li>
+                <label>再次输入密码：</label>
+                <input type="text" name="pwd_again" id="pwd_again" placeholder="请再次输入密码"/>
+            </li>
+            <li><input type="button" value="立即注册" id="register_btn"/></li>
+        </ul>
+    </form>
+</body>
+
+</html>
+
+
+<script>
+    $('#register_btn').on('click', function (){
+        var form = new FormData(document.getElementById('register-form'));
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:3000/register',
+            data:form,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                console.log(data);
+                alert('提交数据成功');
+                $('#email_phone').val('');
+                $('#pwd').val('');
+            }
+        })
+    })
+</script>
