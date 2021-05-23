@@ -110,6 +110,10 @@ export default {
     },
     pageHeader: {
       title: 'عودة'
+    },
+    popconfirm: {
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء'
     }
   }
 };
