@@ -11,14 +11,31 @@
 				</div>
 			</div>
 			<div class="divButton">
-				<el-button type="success" icon="el-icon-connection" plain round>进入面试</el-button>
+				<el-button type="success" icon="el-icon-connection" plain round @click="enterItv">进入面试</el-button>
 			</div>
 		</el-main>
 	</div>
 </template>
 
 <script>
-
+	export default {
+		methods: {
+			enterItv() {
+				this.$confirm('确定进入面试吗?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'success'
+				}).then(() => {
+					this.$router.push("/codingPage");
+				}).catch(() => {
+					// this.$message({
+					// 	type: 'info',
+					// 	message: '取消'
+					// });
+				});
+			}
+		}
+	}
 </script>
 
 <style scoped>

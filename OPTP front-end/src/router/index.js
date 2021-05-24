@@ -9,15 +9,18 @@ import historyInterview from '../views/historyInterview.vue'
 import personalInfo from '../views/personalInfo.vue'
 import accountSetting from '../views/accountSetting.vue'
 import historyQuestion from '../views/historyQuestion.vue'
+import codingPage from '../views/codingPage.vue'
+import questionBank from '../views/questionBank.vue'
+import questionDetail from '../views/questionDetail.vue'
 
 Vue.use(VueRouter)
 
 // 模拟token
 const auth = {
-  islogin(){
-    // return false
-    return true
-  }
+	islogin() {
+		// return false
+		return true
+	}
 }
 
 const routes = [{
@@ -55,6 +58,21 @@ const routes = [{
 		name: 'historyQuestion',
 		component: historyQuestion
 	},
+	{
+		path: '/codingPage',
+		name: 'codingPage',
+		component: codingPage
+	},
+	{
+		path: '/questionBank',
+		name: 'questionBank',
+		component: questionBank
+	},
+	{
+		path: '/questionDetail',
+		name: 'questionDetail',
+		component: questionDetail
+	},
 	{ //路由重定向
 		path: '*',
 		name: 'any',
@@ -66,34 +84,32 @@ const router = new VueRouter({
 	routes
 })
 
-  // 全局守卫
-  router.beforeEach((to, from, next) => {
-    if (to.path != '/' && to.path != '/register') 
-    {
-        if (auth.islogin()) {
-          next()
-        } else {
-          next('/')
-        }
-    }else
-    {
-      next()
-    }
-  })
+// 全局守卫
+router.beforeEach((to, from, next) => {
+	if (to.path != '/' && to.path != '/register') {
+		if (auth.islogin()) {
+			next()
+		} else {
+			next('/')
+		}
+	} else {
+		next()
+	}
+})
 
 //导出
 export default router
 
-		// children: [{
-		// 	path: '/intervieweeHome',
-		// 	name: 'intervieweeHome',
-		// 	component: intervieweeHome
-		// }, {
-		// 	path: '/historyInterview',
-		// 	name: 'historyInterview',
-		// 	component: historyInterview
-		// }, {
-		// 	path: '/personalInfo',
-		// 	name: 'personalInfo',
-		// 	component: personalInfo
-		// }, ]
+// children: [{
+// 	path: '/intervieweeHome',
+// 	name: 'intervieweeHome',
+// 	component: intervieweeHome
+// }, {
+// 	path: '/historyInterview',
+// 	name: 'historyInterview',
+// 	component: historyInterview
+// }, {
+// 	path: '/personalInfo',
+// 	name: 'personalInfo',
+// 	component: personalInfo
+// }, ]
