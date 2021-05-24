@@ -24,7 +24,8 @@
 		
 		width: 100%;
 	}
-	.singleInfo{
-		
+	.singleIntro {
+		display: inline-block;
+		margin-top: 10px;
 	}
 </style>

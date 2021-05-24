@@ -1,6 +1,6 @@
 <template>
 <div>
-	<homeIntro></homeIntro>
+	<fixedParts></fixedParts>
 	<leftNavigator></leftNavigator>
 	<div style="float: right;padding-right: 12%;"><el-button type="primary" icon="el-icon-edit">编辑个人资料</el-button></div>
 	<div>
@@ -82,12 +82,10 @@
 </template>
 
 <script>
-	import leftNavigator from '../components/leftNavigater.vue'
-	import homeIntro from '../components/homeInro.vue'
+	import fixedParts from '../components/fixedParts.vue'
 	export default {
 		components:{
-		leftNavigator,
-		homeIntro
+		fixedParts
 		},
 	}
 </script>

@@ -1,7 +1,6 @@
 <template>
 <div>
-	<home-intro></home-intro>
-	<left-navigator></left-navigator>
+	<fixedParts></fixedParts>
 	<div class="interviewTable">
 	<el-button @click="resetDateFilter">清除日期过滤器</el-button>
 	<el-button @click="clearFilter">清除所有过滤器</el-button>
@@ -64,12 +63,10 @@
 </template>
 
 <script>
-	import leftNavigator from '../components/leftNavigater.vue'
-	import homeIntro from '../components/homeInro.vue'
+	import fixedParts from '../components/fixedParts.vue'
 	export default {
 		components:{
-		leftNavigator,
-		homeIntro
+		fixedParts
 		},
     data() {
       return {

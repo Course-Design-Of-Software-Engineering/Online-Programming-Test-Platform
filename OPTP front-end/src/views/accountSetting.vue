@@ -1,19 +1,6 @@
 <template>
 	<div>
-		<div class="first-navigator">
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-				<el-menu-item index="1" style="width: 100px;">
-					首页
-				</el-menu-item>
-
-				<el-menu-item index="2" style="float: right; padding-right: 3%;">
-					<el-avatar> user </el-avatar>
-					退出登录
-				</el-menu-item>
-			</el-menu>
-		</div>
-		<home-intro></home-intro>
-		<left-navigator></left-navigator>
+		<fixedParts></fixedParts>
 		<div class="accSetting">
 			<h3  style="margin-bottom: 25px;">账号设置</h3>
 			<div class="accEditDiv" style=" margin-top: 10px;">
@@ -49,13 +36,10 @@
 </template>
 
 <script>
-	import leftNavigator from '../components/leftNavigater.vue'
-	import homeIntro from '../components/homeInro.vue'
+	import fixedParts from '../components/fixedParts.vue'
 	export default{
 		components:{
-			leftNavigator,
-			homeIntro
-			
+			fixedParts
 		}
 	}
 </script>

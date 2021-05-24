@@ -41,6 +41,11 @@ const routes = [
     path: '/accountSetting',
     name: 'accountSetting',
     component: accountSetting
+  },
+  { //路由重定向
+    path: '*',
+    name: 'any',
+    redirect: '/'
   }
 ]
 

@@ -1,27 +1,19 @@
 <template>
 	<div>
-		<headNavigater></headNavigater>
-		<homeIntro></homeIntro>
-		<leftNavigator></leftNavigator>
+		<fixedParts></fixedParts>
+		<h3>欢迎进入TrickyCat在线编程笔试平台！</h3>
 	</div>
 </template>
 
 <script>
-	import leftNavigator from '../components/leftNavigater.vue'
-	import homeIntro from '../components/homeInro.vue'
-	import headNavigater from '../components/headNavigater.vue'
+	import fixedParts from '../components/fixedParts.vue'
 	export default{
 		components:{
-			leftNavigator,
-			homeIntro,
-			headNavigater
+			fixedParts
 		}
 	}
 </script>
 
 <style>
-	.singleIntro {
-		display: inline-block;
-		margin-top: 10px;
-	}
+
 </style>
