@@ -126,7 +126,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.butt{
 		padding: 80px 40px;
 		height: 80px;

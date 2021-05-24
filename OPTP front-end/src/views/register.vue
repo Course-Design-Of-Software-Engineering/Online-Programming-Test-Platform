@@ -170,7 +170,7 @@
 	
 </script>
 
-<style>
+<style scoped>
 	.register {
 		margin: 5% 10%;
 	}

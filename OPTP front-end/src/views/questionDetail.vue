@@ -79,7 +79,7 @@
 <script>
 </script>
 
-<style>
+<style scoped>
 	.info{
 		display: inline-block;
 		margin-right: 15px;

@@ -114,7 +114,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
 	.interviewTable{
 		margin-top: 15px;
 		margin-left: 26%;

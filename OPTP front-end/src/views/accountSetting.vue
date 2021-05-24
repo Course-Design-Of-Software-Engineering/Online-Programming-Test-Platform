@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<fixedParts></fixedParts>
-		<leftNavigator></leftNavigator>
 		<div class="accSetting">
 			<h3 style="margin-bottom: 25px;">账号设置</h3>
 			<div class="personalInfo">
@@ -53,7 +52,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 
 .buttGroup{
 		width: 100%;

@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<fixedParts></fixedParts>
-		<leftNavigator></leftNavigator>
 		<div class="personalInfo">
 			<div style=" padding-right: 12%;">
 				<el-button type="primary" icon="el-icon-edit">编辑个人资料</el-button>
@@ -132,7 +131,7 @@
 		}
 	}
 </script>
-<style>
+<style scoped>
 	.personalInfo {
 		margin-left: 26%;
 	}

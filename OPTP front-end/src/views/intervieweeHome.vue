@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<fixedParts></fixedParts>
-		<h3>欢迎进入TrickyCat在线编程笔试平台！</h3>
+		<div>
+			<el-main>
+				<h3>欢迎进入TrickyCat在线编程笔试平台！</h3>
+			</el-main>
+		</div>
 	</div>
 </template>
 
@@ -14,6 +18,11 @@
 	}
 </script>
 
-<style>
-
+<style scoped>
+  .el-main {
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+	height: inherit;
+  }
 </style>

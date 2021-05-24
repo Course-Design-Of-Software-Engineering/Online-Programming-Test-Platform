@@ -1,22 +1,16 @@
 <template>
 	<div id="app">
 		<div class="leftBlock">
-			<img src="../assets/logo.png" width="70%" height="70%">
+			<img src="../assets/logo.png" width=300px height=300px>
 		</div>
 		<div class="rightBlock">
-			<el-row type="flex" justify="center">
-				<!-- justify 对齐方式 -->
-				<el-col :span="6" style="height:100px">
-				</el-col>
-			</el-row>
-
 			<el-row type="flex" justify="center">
 				<!-- justify 对齐方式 -->
 				<el-col :span="18">
 					<el-container>
 						<el-main style="display:flex;justify-content:center;">
 							<el-card class="el-card" style="background-color: #eaecf0;">
-								<h1 style="text-align: center;">欢迎登录在线编程笔试平台</h1>
+								<h1 style="text-align: center; line-height: 80px;">欢迎登录在线编程笔试平台</h1>
 								<el-divider></el-divider>
 								<!-- form表单 -->
 								<el-form :model="nameValidateForm" ref="nameValidateForm" label-width="95px"
@@ -131,11 +125,12 @@
 
 	.rightBlock {
 		height: 100%;
-		width: 50%;
+		width: 120%;
 		float: left;
 		position: absolute;
-		margin-left: 50%;
-		padding: 150px;
+		margin-left: 50px;
+		margin-top: 50px;
+		padding: 100px;
 		box-sizing: border-box;
 		text-align: center;
 

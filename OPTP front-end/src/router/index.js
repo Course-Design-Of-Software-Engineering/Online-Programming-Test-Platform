@@ -11,47 +11,60 @@ import accountSetting from '../views/accountSetting.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'login',
-    component: login
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: register
-  },
-  {
-    path: '/intervieweeHome',
-    name: 'intervieweeHome',
-    component: intervieweeHome
-  },
-  {
-    path: '/historyInterview',
-    name: 'historyInterview',
-    component: historyInterview
-  },
-  {
-    path: '/personalInfo',
-    name: 'personalInfo',
-    component: personalInfo
-  },
-  {
-    path: '/accountSetting',
-    name: 'accountSetting',
-    component: accountSetting
-  },
-  { //路由重定向
-    path: '*',
-    name: 'any',
-    redirect: '/'
-  }
+const routes = [{
+		path: '/',
+		name: 'login',
+		component: login
+	},
+	{
+		path: '/register',
+		name: 'register',
+		component: register
+	},
+	{
+		path: '/intervieweeHome',
+		name: 'intervieweeHome',
+		component: intervieweeHome
+	},
+	{
+		path: '/historyInterview',
+		name: 'historyInterview',
+		component: historyInterview
+	},
+	{
+		path: '/personalInfo',
+		name: 'personalInfo',
+		component: personalInfo
+	},
+	{
+		path: '/accountSetting',
+		name: 'accountSetting',
+		component: accountSetting
+	},
+	{ //路由重定向
+		path: '*',
+		name: 'any',
+		redirect: '/'
+	}
 ]
 
 const router = new VueRouter({
-  routes
+	routes
 })
 
 //导出
 export default router
+
+		// children: [{
+		// 	path: '/intervieweeHome',
+		// 	name: 'intervieweeHome',
+		// 	component: intervieweeHome
+		// }, {
+		// 	path: '/historyInterview',
+		// 	name: 'historyInterview',
+		// 	component: historyInterview
+		// }, {
+		// 	path: '/personalInfo',
+		// 	name: 'personalInfo',
+		// 	component: personalInfo
+		// }, ]
