@@ -5,17 +5,16 @@
 		</div>
 		<div class="rightBlock">
 			<el-row type="flex" justify="center">
-				<!-- justify 对齐方式 -->
 				<el-col :span="18">
 					<el-container>
-						<el-main style="display:flex;justify-content:center;">
+						<el-main style="display:flex; justify-content:center;">
 							<el-card class="el-card" style="background-color: #eaecf0;">
 								<h1 style="text-align: center; line-height: 80px;">欢迎登录在线编程笔试平台</h1>
 								<el-divider></el-divider>
 								<!-- form表单 -->
 								<el-form :model="nameValidateForm" ref="nameValidateForm" label-width="95px"
 									class="demo-ruleForm">
-									<!-- 用户名 -->
+									<!-- 邮箱 -->
 									<el-form-item label="邮箱" prop="email"
 										:rules="[{ required: true, message: '邮箱不能为空'},]">
 										<el-input placeholder="请输入邮箱" type="text" v-model="nameValidateForm.email"

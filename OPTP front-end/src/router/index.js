@@ -9,7 +9,16 @@ import historyInterview from '../views/historyInterview.vue'
 import personalInfo from '../views/personalInfo.vue'
 import accountSetting from '../views/accountSetting.vue'
 import historyQuestion from '../views/historyQuestion.vue'
+
 Vue.use(VueRouter)
+
+// 模拟token
+const auth = {
+  islogin(){
+    // return false
+    return true
+  }
+}
 
 const routes = [{
 		path: '/',
@@ -56,6 +65,21 @@ const routes = [{
 const router = new VueRouter({
 	routes
 })
+
+  // 全局守卫
+  router.beforeEach((to, from, next) => {
+    if (to.path != '/' && to.path != '/register') 
+    {
+        if (auth.islogin()) {
+          next()
+        } else {
+          next('/')
+        }
+    }else
+    {
+      next()
+    }
+  })
 
 //导出
 export default router

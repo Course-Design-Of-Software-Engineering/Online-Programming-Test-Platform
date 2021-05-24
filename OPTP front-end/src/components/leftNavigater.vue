@@ -1,7 +1,7 @@
 <template>
 	<div class="leftNavigator" style="width: 25%;box-sizing: border-box;">
 		<el-col :span="12" style="width: 100%;">
-			<el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+			<el-menu default-active="2" class="el-menu-vertical-demo" @open="auto" @close="handleClose" :default-openeds="['1']">
 				<el-submenu index="1">
 					<template slot="title">
 						<i class="el-icon-date"></i>
