@@ -1,66 +1,76 @@
 <template>
-	<div>
-  <el-button @click="resetDateFilter">清除日期过滤器</el-button>
-  <el-button @click="clearFilter">清除所有过滤器</el-button>
-  <el-table
+<div>
+	<home-intro></home-intro>
+	<left-navigator></left-navigator>
+	<div class="interviewTable">
+	<el-button @click="resetDateFilter">清除日期过滤器</el-button>
+	<el-button @click="clearFilter">清除所有过滤器</el-button>
+	<el-table
     ref="filterTable"
     :data="tableData"
     style="width: 100%">
     <el-table-column
-      prop="title"
-      label="题目名称"
-      width="180"
-      column-key="date"
+		prop="title"
+		label="题目名称"
+		width="180"
+		column-key="date"
     >
     </el-table-column>
     <el-table-column
-      prop="type"
-      label="类型"
-      width="100"
-      :filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
-      :filter-method="filterTag"
-      filter-placement="bottom-end">
-      <template slot-scope="scope">
+		prop="type"
+		label="类型"
+		width="100"
+		:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
+		:filter-method="filterTag"
+		filter-placement="bottom-end">
+		<template slot-scope="scope">
         <el-tag
-          :type="scope.row.tag === '家' ? 'primary' : 'success'"
-          disable-transitions>{{scope.row.tag}}</el-tag>
-      </template>
+			:type="scope.row.tag === '家' ? 'primary' : 'success'"
+			disable-transitions>{{scope.row.tag}}</el-tag>
+		</template>
     </el-table-column>
     <el-table-column
-      prop="judgement"
-      label="评判"
-      :formatter="formatter">
+		prop="judgement"
+		label="评判"
+		:formatter="formatter">
     </el-table-column>
     <el-table-column
-      prop="interview"
-      label="面试场次"
-      :formatter="formatter">
+		prop="interview"
+		label="面试场次"
+		:formatter="formatter">
     </el-table-column>
 	<el-table-column
-	  prop="position"
-	  label="岗位"
-	  width="100"
-	  :filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
-	  :filter-method="filterTag"
-	  filter-placement="bottom-end">
-	  <template slot-scope="scope">
-	    <el-tag
-	      :type="scope.row.tag === '家' ? 'primary' : 'success'"
-	      disable-transitions>{{scope.row.tag}}</el-tag>
-	  </template>
+		prop="position"
+		label="岗位"
+		width="100"
+		:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
+		:filter-method="filterTag"
+		filter-placement="bottom-end">
+		<template slot-scope="scope">
+		<el-tag
+			:type="scope.row.tag === '家' ? 'primary' : 'success'"
+			disable-transitions>{{scope.row.tag}}</el-tag>
+	</template>
 	</el-table-column>
 	<el-table-column
-	  prop=""
-	  label="时间"
-	  sortable="true"
-	  :formatter="formatter">
+		prop=""
+		label="时间"
+		sortable="true"
+		:formatter="formatter">
 	</el-table-column>
-  </el-table>
-  </div>
+	</el-table>
+	</div>
+	</div>
 </template>
 
 <script>
-  export default {
+	import leftNavigator from '../components/leftNavigater.vue'
+	import homeIntro from '../components/homeInro.vue'
+	export default {
+		components:{
+		leftNavigator,
+		homeIntro
+		},
     data() {
       return {
         tableData: [{
@@ -93,7 +103,8 @@
       clearFilter() {
         this.$refs.filterTable.clearFilter();
       },
-      formatter(row, column) {
+	formatter(row) {
+		
         return row.address;
       },
       filterTag(value, row) {
@@ -106,3 +117,9 @@
     }
   }
 </script>
+<style>
+	.interviewTable{
+		margin-top: 15px;
+		margin-left: 26%;
+	}
+</style>

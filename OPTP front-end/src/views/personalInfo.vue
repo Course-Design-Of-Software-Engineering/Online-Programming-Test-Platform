@@ -1,5 +1,7 @@
 <template>
 <div>
+	<homeIntro></homeIntro>
+	<leftNavigator></leftNavigator>
 	<div style="float: right;padding-right: 12%;"><el-button type="primary" icon="el-icon-edit">编辑个人资料</el-button></div>
 	<div>
 		<h3>基本信息</h3>
@@ -80,6 +82,14 @@
 </template>
 
 <script>
+	import leftNavigator from '../components/leftNavigater.vue'
+	import homeIntro from '../components/homeInro.vue'
+	export default {
+		components:{
+		leftNavigator,
+		homeIntro
+		},
+	}
 </script>
 <style>
 	.singleInfo{
