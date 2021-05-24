@@ -2,12 +2,10 @@
 	<div>
 		<fixedParts></fixedParts>
 		<div class="accSetting">
-			<h3 style="margin-bottom: 25px;">账号设置</h3>
-			<div class="personalInfo">
+			<h3 style="margin-top: 15px;margin-bottom: 20px;">账号设置</h3>
 				<div style="" >
 					<el-button type="danger" icon="el-icon-edit">更改账号资料</el-button>
 				</div>
-				
 				<!-- form表单 -->
 				<el-form :model="newSetting" ref="newSetting" label-width="95px" class="demo-ruleForm">
 					<!--邮箱-->
@@ -29,7 +27,6 @@
 			<div class="buttGroup">
 			<el-button>返回首页</el-button>
 			<el-button type="primary">提交修改</el-button>
-			</div>
 			</div>
 		</div>
 	</div>
@@ -60,5 +57,7 @@
 .el-form{
 	margin-top: 10px;
 }
-	
+.accSetting{
+	margin-left: 26%;
+}
 </style>

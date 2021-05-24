@@ -9,7 +9,7 @@
 					</template>
 					<el-menu-item-group>
 						<router-link to="/historyInterview" style="text-decoration:none; color: #2C3E50;"><el-menu-item index="1-1">历史面试</el-menu-item></router-link>
-						<el-menu-item index="1-2">历史题目</el-menu-item>
+						<router-link to="/historyQuestion" style="text-decoration:none; color: #2C3E50;"><el-menu-item index="1-2">历史题目</el-menu-item></router-link>
 					</el-menu-item-group>
 				</el-submenu>
 				<router-link to="/personalInfo" style="text-decoration:none;">

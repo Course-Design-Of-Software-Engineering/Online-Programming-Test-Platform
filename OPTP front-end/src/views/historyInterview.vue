@@ -2,6 +2,7 @@
 <div>
 	<fixedParts></fixedParts>
 	<div class="interviewTable">
+		<h3 style="margin-top: 15px;margin-bottom: 20px;">历史面试</h3>
 	<el-button @click="resetDateFilter">清除日期过滤器</el-button>
 	<el-button @click="clearFilter">清除所有过滤器</el-button>
 	<el-table
@@ -118,5 +119,6 @@
 	.interviewTable{
 		margin-top: 15px;
 		margin-left: 26%;
+		margin-right: 20px;
 	}
 </style>

@@ -8,7 +8,7 @@ import intervieweeHome from '../views/intervieweeHome.vue'
 import historyInterview from '../views/historyInterview.vue'
 import personalInfo from '../views/personalInfo.vue'
 import accountSetting from '../views/accountSetting.vue'
-
+import historyQuestion from '../views/historyQuestion.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -40,6 +40,11 @@ const routes = [{
 		path: '/accountSetting',
 		name: 'accountSetting',
 		component: accountSetting
+	},
+	{
+		path: '/historyQuestion',
+		name: 'historyQuestion',
+		component: historyQuestion
 	},
 	{ //路由重定向
 		path: '*',
