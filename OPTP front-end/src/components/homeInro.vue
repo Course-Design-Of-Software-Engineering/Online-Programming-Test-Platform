@@ -1,10 +1,10 @@
 <template>
 	<div class="homeIntro">
 		<div style="float: left;padding-left: 10%;">
-		<div class="singleIntro">
+		<div class="singleIntro" >
 			<el-avatar shape="circle" :size="100"> user </el-avatar>
 		</div>
-		<div class="singleIntro" >
+		<div class="singleIntro" style="height: 100%;">
 			<p>昵称：</p>
 			<p>邮箱：</p>
 		</div>
