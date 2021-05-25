@@ -20,8 +20,9 @@
   "dependencies": {
     "art-template": "^4.13.2",
     "body-parse": "^0.1.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-art-template": "^1.0.1",
-    "mysql": "^2.18.1"
+    "mongoose": "^5.12.10"
   }
 }
