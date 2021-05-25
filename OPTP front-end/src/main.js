@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+import  codemirror  from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+Vue.use(codemirror)
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

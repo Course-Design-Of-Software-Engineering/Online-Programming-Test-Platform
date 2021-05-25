@@ -9,7 +9,7 @@
 				<!-- form表单 -->
 				<el-form :model="newSetting" ref="newSetting" label-width="95px" class="demo-ruleForm">
 					<!--邮箱-->
-					<el-form-item  style="height: 40px;" label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空'},]">
+					<el-form-item   label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空'},]">
 						<el-input  v-model="newSetting.email">
 						</el-input>
 					</el-form-item>
@@ -59,5 +59,8 @@
 }
 .accSetting{
 	margin-left: 26%;
+}
+.el-form-item{
+	height: 40px;
 }
 </style>
