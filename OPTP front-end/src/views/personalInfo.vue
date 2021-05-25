@@ -3,7 +3,7 @@
 		<fixedParts></fixedParts>
 		<div class="personalInfo">
 			<h3 style="margin-top: 15px;margin-bottom: 20px;">个人资料</h3>
-			<div style=" width: 100%;">
+			<div style="width: 100%;">
 				<el-button type="primary" icon="el-icon-edit">编辑个人资料</el-button>
 			</div>
 			<div>

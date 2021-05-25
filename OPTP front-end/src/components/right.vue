@@ -1,5 +1,5 @@
 <template>
-	<h5>聊天板块</h5>
+	<h4>聊天板块</h4>
 </template>
 
 <script>

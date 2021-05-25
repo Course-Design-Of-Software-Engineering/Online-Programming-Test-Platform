@@ -19,7 +19,6 @@
 	export default {
 		methods: {
 			exit() {
-
 				this.$confirm('退出后将返回登录页面, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
