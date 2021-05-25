@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="background-color: lightgrey">
 		<el-row class="headNavigator" type="flex">
 			<el-col :span="23" style="margin-left: 15px; text-align: left; line-height: 40px;">
 				<i class="el-icon-arrow-left"></i>
@@ -52,12 +52,16 @@
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">示例 </h4>
-				<p>输入</p>
-				<el-input class="text" v-model="inputExample" :disabled="true">
-				</el-input>
-				<p>输出</p>
-				<el-input class="text" v-model="outputExample" :disabled="true">
-				</el-input>
+				<div class="exampleBlock">
+					<h6>输入</h6>
+					<el-input class="text" v-model="inputExample" :disabled="true">
+					</el-input>
+				</div>
+				<div class="exampleBlock">
+					<h6>输出</h6>
+					<el-input class="text" v-model="outputExample" :disabled="true">
+					</el-input>
+				</div>
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">说明 </h4>
@@ -87,7 +91,9 @@
 		background-color: #333333;
 		color: aliceblue;
 		padding: 10px;
+		margin: 0;
 	}
+
 	.info {
 		display: inline-block;
 		margin-right: 15px;
@@ -102,11 +108,35 @@
 		display: inline-block;
 	}
 
-	.detailBlock {
-		padding: 25px;
+	.exampleBlock {
+		padding: 7px;
+	}
+
+	.infoInline,
+	.infoBlock {
+		padding:  10px 150px;
+		
+	
 	}
 
 	.text {
 		margin-right: 300px;
+	}
+
+	.detailBlock {
+		padding: 0;
+		width: 70%;
+		background-color: #f0f0f0;
+		border: #000000;
+		margin: 0 auto;
+		
+		
+	}
+
+	h4 {
+		margin-bottom: 9px;
+	}
+	h6{
+		margin-bottom: 5px;
 	}
 </style>

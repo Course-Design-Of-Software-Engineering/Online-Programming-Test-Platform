@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-row>
+		<el-row style="text-align: left;margin-bottom: 0px;">
 			<el-button type="primary" size="medium" icon="el-icon-edit">编辑题目</el-button>
 			<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank">从题库中选择</el-button>
 		</el-row>
@@ -8,9 +8,9 @@
 			<h4>题目要求</h4>
 			<el-divider></el-divider>
 			<p>时间：O(n)) 空间：jlj </p>
-			<p>代码语言：<el-tag>C++</el-tag>
+			<p>代码语言：<el-tag size="small">C++</el-tag>
 			</p>
-			<p>类型：<el-tag type="success">算法</el-tag>
+			<p>类型：<el-tag type="success" size="small">算法</el-tag>
 			</p>
 		</div>
 		<div class="questionPart">
@@ -47,4 +47,11 @@
 		text-align: left;
 		padding: 20px;
 	}
+
+	.el-divider {
+		margin:5px;
+		display: block;
+		background-color: red;
+	}
+	
 </style>

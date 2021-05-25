@@ -41,6 +41,6 @@
   font-size : 13px;
   line-height : 150%;
   text-align: left;
-  width: 40%;
+  margin-top: 10px;
 }
 </style>

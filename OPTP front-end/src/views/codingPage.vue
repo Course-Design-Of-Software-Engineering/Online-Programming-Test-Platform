@@ -44,6 +44,7 @@
 	import left from '../components/left.vue'
 	import mid from '../components/mid.vue'
 	import right from '../components/right.vue'
+
 	export default {
 		data() {
 			return {
@@ -99,5 +100,6 @@
 		display: inline-block;
 		width: 2px;
 		height: 55em;
+		margin: 3px;
 	}
 </style>
