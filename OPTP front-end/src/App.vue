@@ -1,13 +1,10 @@
 <template>
 	<div id="app">
-		<!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      </div> -->
-		<el-row style="margin-bottom: 5px" class="row-header" type="flex" justify="float">
+		<el-row style="margin-bottom: 0px" class="row-header" type="flex" justify="float">
 			<img src="./assets/logo-T.png" width=110px height=30px style="margin-left: 8px">
 		</el-row>
 		<router-view></router-view>
+		<!-- <el-footer>© 708</el-footer> -->
 	</div>
 </template>
 
@@ -19,17 +16,11 @@
 		text-align: center;
 		color: #2c3e50;
 	}
-/*
-	#nav {
-		padding: 30px;
-	}
-
-	#nav a {
-		font-weight: bold;
-		color: #2c3e50;
-	}
-
-	#nav a.router-link-exact-active {
-		color: #4394b9;
-	}*/
+/* 	.el-footer {
+		background-color: #B3C0D1;
+		color: #333;
+		text-align: center;
+		line-height: 200px;
+	} */
 </style>
+© 2021 GitHub, Inc.
