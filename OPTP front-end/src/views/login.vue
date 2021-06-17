@@ -58,14 +58,34 @@
 		methods: {
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
+					var that = this
 					if (valid) {
 						// alert('Email:'+this.nameValidateForm.email+';Password:'+this.nameValidateForm.password);
 						// console.log(this.nameValidateForm.email);
-						this.$message({
-							message: `Email: ${this.nameValidateForm.email} ; Password: ${this.nameValidateForm.password}`,
-							type: 'success'
+						this.$axios.post('/api/user/login', {
+							email: this.nameValidateForm.email,
+							password: this.nameValidateForm.password
+						}).then(function(response) {
+							if (response.data.status == '0') {
+								let loginResult = response.data.result.list
+								if (loginResult.length == 0) {
+									that.$alert('账号或密码不正确', '登录', {
+										confirmButtonText: '确定',
+										callback: action => {}
+									});
+								} else {
+									that.$store.commit('login', nameValidateForm.email);
+									that.$router.push('/intervieweeHome');
+									that.$message({
+										message: `Email: ${this.nameValidateForm.email} ; Password: ${this.nameValidateForm.password}`,
+										type: 'success'
+									});
+									that.$router.push('/intervieweeHome')
+								}
+							}
+						}).catch(function(error) {
+							console.log(error);
 						});
-						this.$router.push("/intervieweeHome")
 					} else {
 						console.log('error submit!!');
 						return false;
