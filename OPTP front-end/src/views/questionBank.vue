@@ -111,6 +111,15 @@
 			filterHandler(value, row, column) {
 				const property = column['property'];
 				return row[property] === value;
+			},
+			// 当某个题目（其名称或所在的那一行）被点击时调用的函数
+			chooseQuestion(questionId) {
+				this.$router.push({
+					path:'/questionDetail',
+					query:{
+						qusId: questionId
+					}
+				})
 			}
 		}
 	}

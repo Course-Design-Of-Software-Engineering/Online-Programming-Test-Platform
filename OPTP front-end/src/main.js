@@ -7,7 +7,7 @@ import  codemirror  from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import Api from './api/index.js';
+//import Api from './api/index.js';
 
 Vue.use(codemirror)
 Vue.use(ElementUI);

@@ -75,15 +75,22 @@
 									});
 								} else {
 									console.log(loginResult)
-									console.log(this.nameValidateForm.email)
-									console.log(this.nameValidateForm.password)
-									that.$store.commit('login', nameValidateForm.email);
-									that.$router.push('/intervieweeHome');
+									console.log(that.nameValidateForm.email)
+									console.log(that.nameValidateForm.password)
+									// that.$store.commit('login', nameValidateForm.email);
 									that.$message({
-										message: `Email: ${this.nameValidateForm.email} ; Password: ${this.nameValidateForm.password}`,
+										message: `Email: ${that.nameValidateForm.email} ; Password: ${that.nameValidateForm.password}`,
 										type: 'success'
 									});
-									that.$router.push('/intervieweeHome')
+									// that.$router.push('/intervieweeHome')
+									that.$router.push({
+										path:'/intervieweeHome',
+										query:{
+											userId: loginResult._id,
+											userName: loginResult.username,
+											userEmail: nameValidateForm.email
+										}
+									})
 								}
 							}
 						}).catch(function(error) {

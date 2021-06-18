@@ -18,14 +18,16 @@
 						<div class="info">
 							<h4 class="title">类型</h4>
 						</div>
-						<el-tag class="info">算法</el-tag>
+						<!-- <el-tag class="info">算法</el-tag> -->
+						<el-tag class="info">{{ questionType }}</el-tag>
 					</div>
 				</div>
 				<div class="infoInline">
 					<div class="info">
 						<h4 class="title">题目名称 </h4>
 					</div>
-					<p class="info">反转数组</p>
+					<!-- <p class="info">反转数组</p> -->
+					<p class="info">{{ questionTitle }}</p>
 				</div>
 			</div>
 			<div class="infoBlock">
@@ -41,13 +43,14 @@
 						<div class="info">
 							<h6 class="title">空间复杂度： </h6>
 						</div>
-						<p class="info">ljlk</p>
+						<p class="info">nlogn</p>
 					</div>
 				</div>
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">题目叙述 </h4>
 				<el-input class="text" v-model="statement" :disabled="true">
+					{{ questionDescription }}
 				</el-input>
 			</div>
 			<div class="infoBlock">
@@ -55,11 +58,13 @@
 				<div class="exampleBlock">
 					<h6>输入</h6>
 					<el-input class="text" v-model="inputExample" :disabled="true">
+						{{ sample_in }}
 					</el-input>
 				</div>
 				<div class="exampleBlock">
 					<h6>输出</h6>
 					<el-input class="text" v-model="outputExample" :disabled="true">
+						{{ sample_out }}
 					</el-input>
 				</div>
 			</div>
@@ -78,10 +83,55 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				questionId: this.$route.query.qusId,   //是否能这样直接调用赋值？
+				questionTitle: "",
+				questionSetter: "",
+				questionType: "",
+				//questionLink: ""   // 题目链接？
+				questionDescription: "",
+				sample_in: "",
+				sample_out: ""
+			}
+		},
+		mounted() {
+		  this.showDetails()
+		},
 		methods: {
 			backbnk() {
 				this.$router.push("/questionBank");
 			},
+			showDetails() {
+				var that = this;
+				this.$axios.get('/api/questionDetail', {
+					query: this.questionId,
+					//query: this.$route.query.qusId
+				}).then(function(response) {
+					if (response.data.status == '0') {
+						let detailResult = response.data.result.List;
+						if (detailResult.length == 0) {
+							that.$alert('找不到该题目！', '？', {
+								confirmButtonText: '确定',
+								callback: action => {}
+							});
+						} else {
+							console.log(that.questionId)
+							console.log(detailResult)
+							that.questionTitle = detailResult.title;
+							that.questionSetter = detailResult.setter;
+							that.questionType = detailResult.type;
+							that.questionLink = detailResult.link;
+							that.questionDescription = detailResult.description;
+							// 数据库json格式为 sample:[{in:String, out:String}] 不确定下面索引的写法
+							that.sample_in = detailResult.sample[0].in;
+							that.sample_out = detailResult.sample[0].out;
+						}
+					}
+				}).catch(function(error) {
+					console.log(error);
+				});
+			}
 		}
 	}
 </script>
