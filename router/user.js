@@ -82,7 +82,7 @@ router.post('/user_center/edit',(req,res) => {
     else{ 
       res.json({
         status:0, //修改用户信息成功 重定向至user_center
-        msg:err.message
+        // ????????????????????????????????????????????????????????
       })
       // console.log("Updated User:", docs);  //【干啥用的 忘记了】
       // res.redirect('/user_center')
@@ -158,6 +158,7 @@ router.post('/register', (req, res) => {
           else{
             res.json({
               status:0, // console.log("创建用户成功") [可以跳转到login 但是不跳转好像也没无所谓]
+              msg:"创建用户成功",
               flag:1 // 1:创建用户成功
             })
           }
@@ -166,6 +167,7 @@ router.post('/register', (req, res) => {
       else{
         res.json({
           status:0, // console.log("已存在该用户")
+          msg:"该用户已存在",
           flag:0 // 0:已存在该用户
         })
       }
