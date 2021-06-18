@@ -12,16 +12,25 @@ router.get('/codingPage',(req, res)=>{
 	//查找该题目获取详细信息并渲染编程界面
 	problem.find({id:pid}, function(err, data){
 		if(err){
-			console.log('未查找到该题目！')
+			res.json({
+				status:'1',
+				msg:err.message
+			})
 		}
 		else if(data.length == 0){
-			res.send('获取题目信息失败！')
+			res.json({
+				status:'0',
+				msg:'获取题目信息失败！！'
+			})
 		}
 		else{
-			//（不确定）
-			res.redirect('/codingPage')
-			res.render('codingPage.html',{
-				problem:data
+			res.json({
+				status:'0',
+				msg:'',
+				result:{
+					count:data.length,
+					List:data
+				}
 			})
 		}
 	})
@@ -35,10 +44,18 @@ router.post('/codingPage/createP',(req, res)=>{
 	//将新建题目存入数据库中并渲染编程界面展示题目内容
 	newProblem.save(function(err, data){
 		if(err){
-			console.log('题目保存失败！')
+			res.json({
+				status:'1',
+				msg:err.message
+			})
 		}else{
-			res.render('codingPage.html',{
-				problem:newProblem
+			res.json({
+				status:'0',
+				msg:'题目创建成功！',
+				result:{
+					count:data.length,
+					List:data
+				}
 			})
 		}
 	})
@@ -53,14 +70,23 @@ router.post('/codingPage/code',(req,res)=>{
 	//是否需要添加代码对应的题目id（未完成）
 
 	//查找对应面试并添加结果中的代码
-	interview.findOneAndUpdate({title:interviewTitle},{result.code:newCode},function(err, data){
-		if(err){
-			console.log('代码提交失败！')
-		}else{
-			console.log('提交成功！')
-			res.render('codingPage.html',{
-				code:newCode
-			})
+	interview.findOneAndUpdate({title:interviewTitle},
+		{$set:{result.code:newCode}},
+		function(err, data){
+			if(err){
+				res.json({
+					status:'1',
+					msg:err.message
+				})
+			}else{
+				res.json({
+					status:'0',
+					msg:'代码提交成功！',
+					result:{
+						count:data.length,
+						List:data
+					}
+				})
 		}
 	})
 })
@@ -70,7 +96,7 @@ router.post('/codingPage/chat',(req,res)=>{
 	
 })
 
-//根据选择的题目类别渲染题库页面
+//选择题目类别
 router.get('/questionBank',(req,res)=>{
 	//获取选择的题目类别
 	var pType = req.query
@@ -78,14 +104,25 @@ router.get('/questionBank',(req,res)=>{
 	//查找该类别题目获取信息并渲染题库页面
 	problem.find({type:pType}, function(err, data){
 		if(err){
-			console.log('未查找到该类别题目！')
+			res.json({
+				status:'1',
+				msg:err.message
+			})
 		}
 		else if(data.length == 0){
-			res.send('获取题目信息失败！')
+			res.json({
+				status:'0',
+				msg:'获取题目信息失败！'
+			})
 		}
 		else{
-			res.render('questionBank.html',{
-				problem:data
+			res.json({
+				status:'0',
+				msg:'',
+				result:{
+					count:data.length,
+					List:data
+				}
 			})
 		}
 	})
@@ -99,16 +136,25 @@ router.get('/questionDetail',(req,res)=>{
 	//查找该题目获取详细信息并渲染题目详情页面
 	problem.find({id:pid}, function(err, data){
 		if(err){
-			console.log('未查找到该题目！')
+			res.json({
+				status:'1',
+				msg:err.message
+			})
 		}
 		else if(data.length == 0){
-			res.send('获取题目信息失败！')
+			res.json({
+				status:'0',
+				msg:'获取题目信息失败！'
+			})
 		}
 		else{
-			//（不确定）
-			res.redirect('/questionDetail')
-			res.render('questionDetail.html',{
-				problem:data
+			res.json({
+				status:'0',
+				msg:'',
+				result:{
+					count:data.length,
+					List:data
+				}
 			})
 		}
 	}) 
