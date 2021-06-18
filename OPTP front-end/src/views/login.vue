@@ -62,7 +62,7 @@
 					if (valid) {
 						// alert('Email:'+this.nameValidateForm.email+';Password:'+this.nameValidateForm.password);
 						// console.log(this.nameValidateForm.email);
-						this.$axios.post('/api/user/login', {
+						this.$axios.post('/api/login', {
 							email: this.nameValidateForm.email,
 							password: this.nameValidateForm.password
 						}).then(function(response) {
@@ -74,6 +74,9 @@
 										callback: action => {}
 									});
 								} else {
+									console.log(loginResult)
+									console.log(this.nameValidateForm.email)
+									console.log(this.nameValidateForm.password)
 									that.$store.commit('login', nameValidateForm.email);
 									that.$router.push('/intervieweeHome');
 									that.$message({
