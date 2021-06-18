@@ -6,12 +6,21 @@ const router = require('./router/user')
 const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://admin:admin@192.168.1.114/platform'); // 连接远程数据库
-mongoose.connect('mongodb://admin:admin@localhost/platform'); // 连接远程数据库
+mongoose.connect('mongodb://localhost/platform'); // 连接远程数据库
 
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('mogodb is connected!')
+//db.on('error', console.error.bind(console, 'connection error:'));
+//db.once('open', function() {
+//  console.log('mogodb is connected!')
+//});
+
+//监听连接成功(回调)
+db.on('connected',function () {
+  console.log("MongoDB connected success.")
+});
+//连接异常
+db.on('error',function (err) {
+  console.log('Mongoose connection error: ' + err);
 });
 
 

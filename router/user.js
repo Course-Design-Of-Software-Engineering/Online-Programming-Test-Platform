@@ -69,20 +69,23 @@ router.post('/user_center/edit',(req,res) => {
 })
 
 router.post('/login', (req, res) => {
-  var loginUser = {"email":"13530304036@163.com","password":"1958AUTOMONGluid"}
+  var loginUser = {"email":req.email,"password":req.password}
   user.find({email:loginUser.email,password:loginUser.password},function (err, data){
     if (err){ 
-      return res.status(500).send('Server error.')
+      res.json({
+        status:1,
+        msg:err.message
+      })
     } 
     else{ 
-      if(data.length==0){
-        console.log("用户不存在/密码错误")
-      }
-      else{
-        // 登陆成功 跳转个人界面
-        res.redirect('/user_center')
-      }
-    } 
+      res.json({
+        status:0,
+        result:{
+          count:data.length,
+          list:data
+        }
+      })
+    }
   })
 })
 
