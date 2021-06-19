@@ -3,14 +3,14 @@ const router = require('router')
 const interview = require('../model/interview')
 const problem = require('../model/problem')
 const mongoose = require('mongoose')
-const session = require('express-session')
+//const session = require('express-session')
 
 
 //历史面试页面
 router.get('/historyInterview',(req,res)=>{
     
     //通过保存的登录信息：邮箱，去数据库去查找
-    interview.find({$or:[{interviewee: req.session.email},{interviewer: req.session.email}]},(err,data)=>{   
+    interview.find({$or:[{interviewee: req.body.email},{interviewer: req.body.email}]},(err,data)=>{   
         "use strict";
         if(err){
             res.json({

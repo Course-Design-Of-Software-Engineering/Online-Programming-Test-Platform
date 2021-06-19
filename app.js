@@ -2,7 +2,9 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser');
-const router = require('./router/user')
+const userRouter = require('./router/user')
+const historyRouter = require('./router/history')
+const codingRouter = require('./router/coding')
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://admin:admin@localhost/platform'); // 设置了账号密码的数据库
@@ -43,7 +45,9 @@ app.use('/public/', express.static('./public'))
 app.engine('html', require('express-art-template'))
 
 // 把路由容器挂载到 app 服务中
-app.use(router)
+app.use(userRouter)
+app.use(historyRouter)
+app.use(codingRouter)
 
 // 相当于 server.listen
 app.listen(3000, function () {

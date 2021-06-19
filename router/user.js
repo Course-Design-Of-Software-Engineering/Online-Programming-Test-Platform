@@ -91,7 +91,6 @@ router.post('/user_center/edit',(req,res) => {
 })
 
 router.post('/login', (req, res) => {
-  console.log("req.body:",req.body)
   // eg：req.body = { email: 'goodmanfrye@velity.com', password: '1958AUTOMONGluid' } 
   // 返回json格式邮箱和密码用于查询
   user.find({email:req.body.email,password:req.body.password},function (err, data){
@@ -105,7 +104,6 @@ router.post('/login', (req, res) => {
       })
     } 
     else{ 
-      console.log("data:",data)
       res.json({
         status:0,
         result:{
