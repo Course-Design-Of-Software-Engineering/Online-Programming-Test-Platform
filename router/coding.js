@@ -65,13 +65,12 @@ router.post('/codingPage/createP',(req, res)=>{
 router.post('/codingPage/code',(req,res)=>{
 	//获取提交的代码信息
 	var newCode = req.body.result.code
-	//获取该次面试信息（未完成）
-	//var interviewTitle = 
-	//是否需要添加代码对应的题目id（未完成）
+	//获取该次面试id
+	var interviewId = req.body._id
 
 	//查找对应面试并添加结果中的代码
-	interview.findOneAndUpdate({title:interviewTitle},
-		{$set:{result.code:newCode}},
+	interview.findOneAndUpdate({title:interviewId},
+		{$addToSet:{result:{code:newCode}},
 		function(err, data){
 			if(err){
 				res.json({
