@@ -6,7 +6,7 @@
 					<el-avatar shape="circle" :size="100"> user </el-avatar>
 				</div>
 				<div class="singleIntro">
-					<p id="helloUser">用户{{ userName }}，您好！</p>
+					<p id="helloUser">{{ userName }}，您好！</p>
 					<p id="email">{{ userEmail }}</p>
 				</div>
 			</div>

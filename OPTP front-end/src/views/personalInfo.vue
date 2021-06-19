@@ -4,7 +4,7 @@
 		<div class="personalInfo">
 			<h3 style="margin-top: 15px;margin-bottom: 20px;">个人资料</h3>
 			<div style="width: 100%;">
-				<el-button type="primary" icon="el-icon-edit">编辑个人资料</el-button>
+				<el-button type="primary" icon="el-icon-edit" @click="changeInfo">编辑个人资料</el-button>
 			</div>
 			<div>
 				<el-container>
@@ -101,8 +101,8 @@
 				</el-container>
 			</div>
 			<div class="buttGroup">
-			<el-button>返回首页</el-button>
-			<el-button type="primary">提交修改</el-button>
+			<el-button type="primary" @click="submitForm('newInfo')">提交修改</el-button>
+			<el-button @click="cancelChg()">取消</el-button>
 			</div>
 		</div>
 	</div>
@@ -149,6 +149,7 @@
 		},
 		methods: {
 			showInfo() {
+				this.flag = true;
 				var that = this;
 				this.$axios.get('/api/user_center', {
 					params: {
@@ -158,7 +159,7 @@
 					if (response.data.status == '0') {
 						let detailResult = response.data.result.list;
 						if (detailResult.length == 0) {
-							that.$alert('找不到当前用户信息！', '？', {
+							that.$alert('找不到当前用户信息！', '提示', {
 								confirmButtonText: '确定',
 								callback: action => {}
 							});
@@ -180,6 +181,60 @@
 					}
 				}).catch(function(error) {
 					console.log(error);
+				});
+			},
+			changeInfo() {
+				this.flag = false;
+			},
+			cancelChg() {
+				//提示取消将会丢失修改的内容
+				this.$confirm('取消修改将会丢失当前修改的内容，确定放弃吗？', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'success'
+				}).then(() => {
+					this.flag = true;
+				}).catch(() => {
+					// this.$message({
+					// 	type: 'info',
+					// 	message: '取消'
+					// });
+				});
+			},
+			submitForm(formName) {
+				this.$refs[formName].validate((valid) => {
+					var that = this
+					if (valid) {
+						this.$axios.post('/api/user_center/edit', {
+							email: this.userEmail,
+							formContent: this.newInfo,
+						}).then(function(response) {
+							if (response.data.status == '0') {
+								let infoResult = response.data.result.list   //写法不确定
+								if (infoResult.length == 0) {
+									that.$alert('找不到编辑用户信息！', '提示', {
+										confirmButtonText: '确定',
+										callback: action => {}
+									});
+								} else {
+									console.log(infoResult)
+									console.log(that.userEmail)
+									console.log(that.newInfo.user)
+									that.$message({
+										message: `资料编辑成功！`,
+										type: 'success'
+									});
+									that.showInfo();
+									//that.flag = true;
+								}
+							}
+						}).catch(function(error) {
+							console.log(error);
+						});
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
 				});
 			}
 		}
@@ -203,6 +258,7 @@
 	}
 
 	.buttGroup{
-		float: left;
+		float: inherit;
+		margin-bottom: 50px;
 	}
 </style>

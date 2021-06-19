@@ -176,24 +176,82 @@
 			};
 		},
 		methods: {
-			submitForm(formData) {
-				this.$refs[formData].validate((valid) => {
-					if (valid) {
-						// alert('Email:'+this.ValidateForm.email+';Password:'+this.ValidateForm.password);
-						// console.log(this.ValidateForm.email);
-						this.$message({
-							message: `Email: ${this.intervieweeInfo.email} ; Password: ${this.intervieweeInfo.password}`,
-							type: 'success'
-						});
-						this.$router.push("/intervieweeHome")
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
+			submitForm(formName) {
+				//提示一旦注册后邮箱将不能修改
+				this.$confirm('一旦注册后邮箱将不能修改，确定无误吗？', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'success'
+				}).then(() => {    //进入then的层次后，当前this是否会改变？
+					this.$refs[formName].validate((valid) => {
+						if (formName == 'intervieweeInfo') {
+							var formData = this.intervieweeInfo;
+						} else {
+							var formData = this.interviewerInfo;
+						};
+						var that = this;
+						if (valid) {
+							// alert('Email:'+this.intervieweeInfo.email+';Password:'+this.intervieweeInfo.password);
+							// console.log(this.intervieweeInfo.email);
+							this.$axios.post('/api/register', {
+								email: formData.email,
+								password: formData.password,
+								username: formData.user
+							}).then(function(response) {
+								if (response.data.status == '0') {
+									if (response.data.flag == '0') {
+										that.$alert('该邮箱已被注册！', '提示', {
+											confirmButtonText: '确定',
+											callback: action => {}
+										});
+									} else {
+										console.log(formData.email)
+										console.log(formData.password)
+										that.COMMON.user=formData.email;
+										console.log('userid:',that.COMMON.user);
+										this.$message({
+											message: `Email: ${formData.email} ; Password: ${formData.password}`,
+											type: 'success'
+										});
+										// that.$router.push('/intervieweeHome')
+										that.$router.push({
+											path:'/intervieweeHome',
+											query:{
+												userName: formData.user,
+												userEmail: formData.email
+											}
+										})
+									}
+								}
+							}).catch(function(error) {
+								console.log(error);
+							});
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				}).catch(() => {
+					// this.$message({
+					// 	type: 'info',
+					// 	message: '取消'
+					// });
 				});
 			},
 			back() {
-				this.$router.push("/")
+				//提示返回将会丢失注册的内容
+				this.$confirm('返回将会丢失当前填写的信息，确定放弃吗？', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'success'
+				}).then(() => {
+					this.$router.push("/");
+				}).catch(() => {
+					// this.$message({
+					// 	type: 'info',
+					// 	message: '取消'
+					// });
+				});
 			}
 		}
 	}
