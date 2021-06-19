@@ -6,8 +6,8 @@
 					<el-avatar shape="circle" :size="100"> user </el-avatar>
 				</div>
 				<div class="singleIntro">
-					<p id="helloUser">用户xxx，您好！</p>
-					<p id="email">xxxxxxx@xxx.com</p>
+					<p id="helloUser">{{ userName }}，您好！</p>
+					<p id="email">{{ userEmail }}</p>
 				</div>
 			</div>
 			<div class="divButton">
@@ -19,6 +19,10 @@
 
 <script>
 	export default {
+		props: {
+			userName: String,
+			userEmail: String
+		}
 		methods: {
 			enterItv() {
 				this.$confirm('确定进入面试吗?', '提示', {

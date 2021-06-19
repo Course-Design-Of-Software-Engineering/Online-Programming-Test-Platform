@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<headNavigater></headNavigater>
-		<homeIntro></homeIntro>
+		<homeIntro :userName="name" :userEmail="mail"></homeIntro>
 		<leftNavigator></leftNavigator>
 	</div>
 </template>
@@ -15,6 +15,16 @@
 			leftNavigator,
 			homeIntro,
 			headNavigater
+		},
+		props: {
+			username: String,
+			usermail: String
+		},
+		data: {
+			return {
+				name: username,   // 不确定是否加 “ ”
+				mail: usermail
+			}
 		}
 	}
 </script>

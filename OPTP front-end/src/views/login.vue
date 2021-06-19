@@ -88,7 +88,7 @@
 										query:{
 											userId: loginResult._id,
 											userName: loginResult.username,
-											userEmail: nameValidateForm.email
+											userEmail: that.nameValidateForm.email
 										}
 									})
 								}
