@@ -33,9 +33,15 @@ var interSchema = mongoose.Schema({
         message:String, // 消息
         moment:String // 发送时间
     }],
-    participants:[{  
+    participants:[{   //聊天参与者
         email:String
-    }]
+    }],
+    company:{
+        type:string
+    },
+    finalResult:{
+        type:string
+    }
 });
 
 
