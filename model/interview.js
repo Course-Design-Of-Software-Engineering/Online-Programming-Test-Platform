@@ -29,9 +29,12 @@ var interSchema = mongoose.Schema({
         score:String // 得分
     }],
     chat:[{
-        man:String, // 发言人id
+        email:String, // 发言人email
         message:String, // 消息
         moment:String // 发送时间
+    }],
+    participants:[{  
+        email:String
     }]
 });
 
