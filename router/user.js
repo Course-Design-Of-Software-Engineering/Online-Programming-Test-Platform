@@ -9,7 +9,7 @@ const router = express.Router()
 
 
 // 读取用户email，从数据库中查找，渲染用户个人信息
-router.get('/personalInfo', (req, res) => {
+router.get('/user_center', (req, res) => {
   console.log("in /personalInfo-------req.body.email:")
   console.log(req.body.email)
   userEmail=req.query.email  // userEmail = "goodmanfrye@velity.com"
