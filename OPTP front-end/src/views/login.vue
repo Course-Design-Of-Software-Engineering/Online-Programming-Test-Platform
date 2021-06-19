@@ -45,6 +45,7 @@
 </template>
 
 <script>
+	import global from '../global.vue'
 	export default {
 		name: 'login',
 		data() {
@@ -78,6 +79,8 @@
 									console.log(that.nameValidateForm.email)
 									console.log(that.nameValidateForm.password)
 									// that.$store.commit('login', nameValidateForm.email);
+									that.COMMON.user=that.nameValidateForm.email;
+									console.log('userid:',that.COMMON.user);
 									that.$message({
 										message: `Email: ${that.nameValidateForm.email} ; Password: ${that.nameValidateForm.password}`,
 										type: 'success'
