@@ -70,7 +70,7 @@ router.post('/codingPage/code',(req,res)=>{
 
 	//查找对应面试并添加结果中的代码
 	interview.findOneAndUpdate({title:interviewId},
-		{$addToSet:{result:{code:newCode}},
+		{$addToSet:{result:{code:newCode}}},
 		function(err, data){
 			if(err){
 				res.json({
