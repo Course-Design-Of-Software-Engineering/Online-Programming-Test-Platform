@@ -67,8 +67,6 @@
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">说明 </h4>
-				<el-input class="text" v-model="statement" :disabled="true">
-				</el-input>
 			</div>
 			<div class="infoBlock" style="margin-top: 35px;text-align: center;">
 				<el-button type="primary">确认选题</el-button>

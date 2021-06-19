@@ -10,8 +10,8 @@ const router = express.Router()
 
 // 读取用户email，从数据库中查找，渲染用户个人信息
 router.get('/user_center', (req, res) => {
-  console.log("in /personalInfo-------req.body.email:")
-  console.log(req.body.email)
+  console.log("in /personalInfo-------req.query.email:")
+  console.log(req.query.email)
   userEmail=req.query.email  // userEmail = "goodmanfrye@velity.com"
   user.find({email:userEmail},function (err, data){
     if (err) {
@@ -21,6 +21,7 @@ router.get('/user_center', (req, res) => {
       })
     }
     else{
+      console.log("data:",data)
       res.json({
         status:0,
         result:{
@@ -112,26 +113,6 @@ router.post('/login', (req, res) => {
     }
   }).lean()
 })
-
-// 为什么我会写这个 register需要get啥数据
-// router.get('/register', (req, res) => {
-//   // res.render('user_center_edit.html', {})
-//   user.find({email:userEmail = "goodmanfrye@velity.com"},function (err, data){
-//     if (err) {
-//       return res.status(500).send('Server error.')
-//     }
-//     else{
-//       if(data.length==0){
-//         res.send("找不到该用户 T T") //正常情况下应该不会有这种情况，传进来的email肯定在数据库存在的
-//       }
-//       else{
-//         res.render('user_center_edit.html', { // 替换成实际的用户中心界面 data为传入的用户数据
-//           user:data
-//         })
-//       }
-//     }
-//   }).lean()
-// })
 
 router.post('/register', (req, res) => {
   // req.body.xxx：用户注册信息 一定包含用户名、邮箱、密码；可选意向岗位、手机号码、目前岗位

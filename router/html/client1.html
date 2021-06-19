@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>客户端1</title>
+</head>
+
+<body>
+    <label>聊天内容:</label><br />
+    <textarea id="content" style="height: 200px; width:300px;"></textarea>
+    <br />
+    <input id="sendMsg" type="text" />
+    <button id="btn_send">发送</button>
+
+    <!-- 首先引入 socket.io 客户端脚本,这个地方拉的是服务端的，不是静态资源哦，这里很重要-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect(); //连接服务端，因为本机使用localhost 所以connect(url)中url可以不填或写 http://localhost
+        // 监听 receiveMsg 事件，用来接收其他客户端推送的消息
+        socket.on("receiveMsg", function (data) {
+            content.value += data.client + ":" + data.msg + "\r\n";
+        });
+        var content = document.getElementById("content");
+        var sendMsg = document.getElementById("sendMsg");
+        var btn_send = document.getElementById("btn_send");
+        btn_send.addEventListener("click", function () {
+            var data = {
+                client: "客户端1",//客户端名称
+                msg: sendMsg.value
+            };
+            //给服务端发送 sendMsg事件名的消息
+            socket.emit("sendMsg", data);
+            content.value += data.client + ":" + data.msg + "\r\n";
+            sendMsg.value = "";
+        });
+    </script>
+
+</body>
+
+</html>
