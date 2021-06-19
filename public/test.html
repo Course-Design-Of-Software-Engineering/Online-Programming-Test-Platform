@@ -24,9 +24,9 @@
     btn.addEventListener('click', (event) => {
         let msg = msginput.value;
         let data = {msg: msg};
-        socket.emit('sendMessage', data);
+        socket.emit('sendMsg', data);
     });
-    socket.on('receiveMessage', (data) => {
+    socket.on('receiveMsg', (data) => {
         console.log('收到');
         console.log(data);
         
