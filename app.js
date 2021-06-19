@@ -49,6 +49,12 @@ app.use(userRouter)
 app.use(historyRouter)
 app.use(codingRouter)
 
+//---------启动socket.io------------
+// var server = require('http').createServer(app)
+// var io = require('./socketio')
+// io.getSocketio(server);
+//----------------------------------
+
 // 相当于 server.listen
 app.listen(3000, function () {
   console.log('app is running at port 3000.')
