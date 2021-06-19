@@ -37,10 +37,10 @@ var interSchema = mongoose.Schema({
         email:String
     }],
     company:{
-        type:string
+        type:String
     },
     finalResult:{
-        type:string
+        type:String
     }
 });
 

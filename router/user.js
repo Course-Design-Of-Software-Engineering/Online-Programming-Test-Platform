@@ -9,7 +9,9 @@ const router = express.Router()
 
 
 // 读取用户email，从数据库中查找，渲染用户个人信息
-router.get('/user_center', (req, res) => {
+router.get('/personalInfo', (req, res) => {
+  console.log("in /personalInfo-------req.body.email:")
+  console.log(req.body.email)
   userEmail=req.query.email  // userEmail = "goodmanfrye@velity.com"
   user.find({email:userEmail},function (err, data){
     if (err) {
@@ -26,11 +28,6 @@ router.get('/user_center', (req, res) => {
           list:data
         }
       })
-      // if(data.length==0){res.send("找不到该用户 T T")}
-      // else{
-      //   res.render('user_center.html', { // 替换成实际的用户中心界面 data为传入的用户数据
-      //     user:data})
-      // }
     }
   }).lean()
 })
@@ -139,6 +136,7 @@ router.post('/login', (req, res) => {
 router.post('/register', (req, res) => {
   // req.body.xxx：用户注册信息 一定包含用户名、邮箱、密码；可选意向岗位、手机号码、目前岗位
   // var registerUser = {"email":"13530304036@163.com","password":"1958AUTOMONGluid"}
+  console.log("req.body.email:",req.body.email)
   user.find({email:req.body.email},function (err, data){
     if (err){ 
       res.json({
