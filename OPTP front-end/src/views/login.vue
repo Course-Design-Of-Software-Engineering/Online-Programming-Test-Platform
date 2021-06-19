@@ -89,9 +89,10 @@
 									that.$router.push({
 										path:'/intervieweeHome',
 										query:{
-											userId: loginResult._id,
-											userName: loginResult.username,
+											userId: loginResult[0]._id,
+											userName: loginResult[0].username,
 											userEmail: that.nameValidateForm.email
+											//userEmail: loginResult[0].email
 										}
 									})
 								}
