@@ -1,5 +1,5 @@
 const express = require('express')
-const router = require('router')
+const router = express.Router()
 const interview = require('../model/interview')
 const problem = require('../model/problem')
 const mongoose = require('mongoose')
