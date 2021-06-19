@@ -95,6 +95,8 @@ router.post('/login', (req, res) => {
   // eg：req.body = { email: 'goodmanfrye@velity.com', password: '1958AUTOMONGluid' } 
   // 返回json格式邮箱和密码用于查询
   user.find({email:req.body.email,password:req.body.password},function (err, data){
+    console.log("提交表单信息：",req.body)
+    console.log("查询返回结果：",data)
     if (err){ 
       console.log("error")
       res.json({
@@ -113,7 +115,7 @@ router.post('/login', (req, res) => {
       })
       
     }
-  })
+  }).lean()
 })
 
 // 为什么我会写这个 register需要get啥数据
