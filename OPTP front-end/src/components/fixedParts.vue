@@ -20,7 +20,7 @@
 			username: String,
 			usermail: String
 		},
-		data: {
+		data() {
 			return {
 				name: username,   // 不确定是否加 “ ”
 				mail: usermail

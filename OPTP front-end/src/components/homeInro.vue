@@ -22,10 +22,10 @@
 		props: {
 			userName: String,
 			userEmail: String
-		}
+		},
 		methods: {
 			enterItv() {
-				this.$confirm('确定进入面试吗?', '提示', {
+				this.$confirm('确定进入面试吗？', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'success'
