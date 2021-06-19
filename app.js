@@ -7,7 +7,7 @@ const historyRouter = require('./router/history')
 const codingRouter = require('./router/coding')
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://admin:admin@localhost/platform'); // 设置了账号密码的数据库
+mongoose.connect('mongodb://localhost/testdb'); // 设置了账号密码的数据库
 // mongoose.connect('mongodb://localhost/platform'); // 没有设置账号密码的数据库
 
 var db = mongoose.connection;
@@ -50,12 +50,15 @@ app.use(historyRouter)
 app.use(codingRouter)
 
 //---------启动socket.io------------
-// var server = require('http').createServer(app)
-// var io = require('./socketio')
-// io.getSocketio(server);
+var server = require('http').Server(app);
+var io = require('./socketio');
+io.getSocketio(server);
 //----------------------------------
+server.listen(3000, () => {
+  console.log('server running at 127.0.0.1:3000');
+});
 
 // 相当于 server.listen
-app.listen(3000, function () {
-  console.log('app is running at port 3000.')
-})
+// app.listen(3000, function () {
+//   console.log('app is running at port 3000.')
+// })
