@@ -42,6 +42,7 @@
 			},
 			data() {
 				return {
+					questionList:[],
 					tableData: [{
 						date: '2016-05-02',
 						name: '王小虎',
@@ -66,6 +67,29 @@
 				}
 			},
 			methods: {
+				getHistoryQuestion() {
+					let that=this;
+					this.$axios.get('/api/historyQuestion',{
+						params:{
+							interviewee:this.COMMON.user
+						}
+					})
+						.then((res) => {
+							console.log(res);
+							if(res.data.status=='0'){
+								console.log(res.data.result.list);
+								that.questionList=res.data.result.list;
+				
+							}
+							else{
+								console.log('getInfo status Error!');
+							}
+							
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+				},
 				resetDateFilter() {
 					this.$refs.filterTable.clearFilter('date');
 				},
