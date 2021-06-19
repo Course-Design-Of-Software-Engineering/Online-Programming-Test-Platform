@@ -112,7 +112,7 @@ router.post('/login', (req, res) => {
         }
       })
     }
-  })
+  }).lean()
 })
 
 // 为什么我会写这个 register需要get啥数据
