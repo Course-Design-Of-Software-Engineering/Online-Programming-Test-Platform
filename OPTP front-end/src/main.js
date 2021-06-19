@@ -8,6 +8,8 @@ import 'codemirror/lib/codemirror.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 //import Api from './api/index.js';
+import global from './global.vue'
+Vue.prototype.COMMON = global
 
 Vue.use(codemirror)
 Vue.use(ElementUI);
