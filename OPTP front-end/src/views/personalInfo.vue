@@ -156,7 +156,7 @@
 					}
 				}).then(function(response) {
 					if (response.data.status == '0') {
-						let detailResult = response.data.result.List;
+						let detailResult = response.data.result.list;
 						if (detailResult.length == 0) {
 							that.$alert('找不到当前用户信息！', '？', {
 								confirmButtonText: '确定',
