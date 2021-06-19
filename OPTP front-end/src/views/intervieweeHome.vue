@@ -1,9 +1,11 @@
 <template>
 	<div>
-		<fixedParts :username="userName" :usermail="userEmail"></fixedParts>
+		<fixedParts :usrname="userName" :usermail="userEmail"></fixedParts>
 		<div>
 			<el-main>
 				<h3>欢迎进入TrickyCat在线编程笔试平台！</h3>
+				<h3>{{ this.$route.query.userName }}，您好！</h3>
+				<!-- <h3>邮箱：{{ this.$route.query.userEmail }}</h3> -->
 			</el-main>
 		</div>
 	</div>

@@ -49,28 +49,25 @@
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">题目叙述 </h4>
-				<el-input class="text" v-model="statement" :disabled="true">
-					{{ questionDescription }}
+				<el-input class="text" v-model="statement" :disabled="true" :placeholder="questionDescription">
 				</el-input>
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">示例 </h4>
 				<div class="exampleBlock">
 					<h6>输入</h6>
-					<el-input class="text" v-model="inputExample" :disabled="true">
-						{{ sample_in }}
+					<el-input class="text" v-model="inputExample" :disabled="true" :placeholder="sample_in">
 					</el-input>
 				</div>
 				<div class="exampleBlock">
 					<h6>输出</h6>
-					<el-input class="text" v-model="outputExample" :disabled="true">
-						{{ sample_out }}
+					<el-input class="text" v-model="outputExample" :disabled="true" :placeholder="sample_out">
 					</el-input>
 				</div>
 			</div>
 			<div class="infoBlock">
 				<h4 class="title">说明 </h4>
-				<el-input class="text" v-model="statement" :disabled="true">
+				<el-input class="text" v-model="statement" :disabled="true" :placeholder="">
 				</el-input>
 			</div>
 			<div class="infoBlock" style="margin-top: 35px;text-align: center;">
@@ -105,8 +102,10 @@
 			showDetails() {
 				var that = this;
 				this.$axios.get('/api/questionDetail', {
-					query: this.questionId,
-					//query: this.$route.query.qusId
+					params: {
+						query: this.questionId
+						//query: this.$route.query.qusId
+					}
 				}).then(function(response) {
 					if (response.data.status == '0') {
 						let detailResult = response.data.result.List;
@@ -118,14 +117,14 @@
 						} else {
 							console.log(that.questionId)
 							console.log(detailResult)
-							that.questionTitle = detailResult.title;
-							that.questionSetter = detailResult.setter;
-							that.questionType = detailResult.type;
-							that.questionLink = detailResult.link;
-							that.questionDescription = detailResult.description;
+							that.questionTitle = detailResult[0].title;
+							that.questionSetter = detailResult[0].setter;
+							that.questionType = detailResult[0].type;
+							that.questionLink = detailResult[0].link;
+							that.questionDescription = detailResult[0].description;
 							// 数据库json格式为 sample:[{in:String, out:String}] 不确定下面索引的写法
-							that.sample_in = detailResult.sample[0].in;
-							that.sample_out = detailResult.sample[0].out;
+							that.sample_in = detailResult[0].sample[0].in;
+							that.sample_out = detailResult[0].sample[0].out;
 						}
 					}
 				}).catch(function(error) {
