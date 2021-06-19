@@ -6,7 +6,7 @@ const router = require('./router/user')
 const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://admin:admin@192.168.1.114/platform'); // 连接远程数据库
-mongoose.connect('mongodb://localhost/platform'); // 连接远程数据库
+mongoose.connect('mongodb://admin:admin@localhost/platform'); // 连接远程数据库
 
 var db = mongoose.connection;
 //db.on('error', console.error.bind(console, 'connection error:'));

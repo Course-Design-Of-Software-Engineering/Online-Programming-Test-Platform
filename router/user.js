@@ -96,12 +96,14 @@ router.post('/login', (req, res) => {
   // 返回json格式邮箱和密码用于查询
   user.find({email:req.body.email,password:req.body.password},function (err, data){
     if (err){ 
+      console.log("error")
       res.json({
         status:1, // 状态码应该为500 服务端出错
         msg:err.message
       })
     } 
     else{ 
+      console.log("data:",data)
       res.json({
         status:0,
         result:{
@@ -109,6 +111,7 @@ router.post('/login', (req, res) => {
           list:data
         }
       })
+      
     }
   })
 })
