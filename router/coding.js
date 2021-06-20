@@ -125,38 +125,6 @@ router.post('/codingPage/code',(req,res)=>{
 	})
 })
 
-//发送聊天信息（未完成）
-router.post('/codingPage/chat',(req,res)=>{
-	//获取该次面试id
-	var interviewId = req.body._id
-
-	//查找该次面试的聊天记录
-	interview.find({title:interviewId}, function(err, data){
-		if(err){
-			res.json({
-				status:'1',
-				msg:err.message
-			})
-		}
-		else if(data.length == 0){
-			res.json({
-				status:'0',
-				msg:'获取聊天记录失败！'
-			})
-		}
-		else{
-			res.json({
-				status:'0',
-				msg:'',
-				result:{
-					count:data.length,
-					List:data
-				}
-			})
-		}
-	})
-})
-
 //选择题目类别
 router.get('/questionBank',(req,res)=>{
 	//获取选择的题目类别
@@ -220,5 +188,40 @@ router.get('/questionDetail',(req,res)=>{
 		}
 	}) 
 })
+
+//------------聊天（未完成）-----------
+//显示聊天记录
+router.get('/codingPage/chatLog',(req,res)=>{
+	//获取该次面试id
+	var interviewId = req.query._id
+
+	//查找该次面试的聊天记录
+	interview.find({title:interviewId}, function(err, data){
+		if(err){
+			res.json({
+				status:'1',
+				msg:err.message
+			})
+		}
+		else if(data.length == 0){
+			res.json({
+				status:'0',
+				msg:'获取聊天记录失败！'
+			})
+		}
+		else{
+			res.json({
+				status:'0',
+				msg:'',
+				result:{
+					count:data.length,
+					List:data
+				}
+			})
+		}
+	})
+})
+
+
 
 module.exports = router
