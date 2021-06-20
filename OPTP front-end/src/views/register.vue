@@ -184,10 +184,9 @@
 					type: 'success'
 				}).then(() => {    //进入then的层次后，当前this是否会改变？
 					this.$refs[formName].validate((valid) => {
-						if (formName == 'intervieweeInfo') {
-							var formData = this.intervieweeInfo;
-						} else {
-							var formData = this.interviewerInfo;
+						var formData = this.intervieweeInfo;
+						if (formName == 'interviewerInfo') {
+							formData = this.interviewerInfo;
 						};
 						var that = this;
 						if (valid) {
