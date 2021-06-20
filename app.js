@@ -6,9 +6,10 @@ const userRouter = require('./router/user')
 const historyRouter = require('./router/history')
 const codingRouter = require('./router/coding')
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false)
 
-mongoose.connect('mongodb://localhost/testdb'); // 设置了账号密码的数据库
-// mongoose.connect('mongodb://localhost/platform'); // 没有设置账号密码的数据库
+// mongoose.connect('mongodb://localhost/testdb'); // 设置了账号密码的数据库
+mongoose.connect('mongodb://admin:admin@localhost/platform'); // 没有设置账号密码的数据库
 
 var db = mongoose.connection;
 //db.on('error', console.error.bind(console, 'connection error:'));
@@ -50,15 +51,24 @@ app.use(historyRouter)
 app.use(codingRouter)
 
 //---------启动socket.io------------
-var server = require('http').Server(app);
-var io = require('./socketio');
-io.getSocketio(server);
+// var server = require('http').Server(app);
+// var io = require('./socketio');
+// io.getSocketio(server);
 //----------------------------------
-server.listen(3000, () => {
-  console.log('server running at 127.0.0.1:3000');
-});
+// server.listen(3000, () => {
+//   console.log('server running at 127.0.0.1:3000');
+// });
 
 // 相当于 server.listen
-// app.listen(3000, function () {
-//   console.log('app is running at port 3000.')
-// })
+app.listen(3000, function () {
+  console.log('app is running at port 3000.')
+})
+
+
+
+date='2020-06-27T14:20:27.000000Z';
+console.log(date)
+var json_date = new Date(date).toJSON();
+console.log(json_date)
+new_data= new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, ''); 
+console.log(new_data) // 2020-06-27 14:20:27
