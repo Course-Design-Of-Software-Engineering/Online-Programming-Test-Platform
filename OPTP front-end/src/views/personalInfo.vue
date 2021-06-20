@@ -177,6 +177,17 @@
 							that.curInfo.major = detailResult[0].edu_info[0].major;
 							that.curInfo.eduDegree = detailResult[0].edu_info[0].education;
 							that.curInfo.entranceYear = detailResult[0].edu_info[0].start;
+							that.newInfo.user = detailResult[0].username;
+							that.newInfo.phone = detailResult[0].phone;
+							that.newInfo.gender = detailResult[0].gender;
+							that.newInfo.birthday = detailResult[0].birthday;
+							that.newInfo.currPosition = detailResult[0].intenden_position;
+							// 数据库json格式为 cur_info:[{company:String, title:String}] 不确定下面索引的写法
+							that.newInfo.currTitle = detailResult[0].cur_info[0].title;
+							that.newInfo.school = detailResult[0].edu_info[0].school;
+							that.newInfo.major = detailResult[0].edu_info[0].major;
+							that.newInfo.eduDegree = detailResult[0].edu_info[0].education;
+							that.newInfo.entranceYear = detailResult[0].edu_info[0].start;
 						}
 					}
 				}).catch(function(error) {
