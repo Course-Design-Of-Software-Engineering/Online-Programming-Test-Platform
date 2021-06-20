@@ -24,3 +24,25 @@ new Vue({
   router,
   render: h => h(App)
 })
+
+// ---------------start socket---------------------
+
+// import VueSocketIO from 'vue-socket.io'
+// Vue.use(new VueSocketIO({
+//   debug: true,
+//   connection: 'http://localhost:9000/',
+//   vuex: {
+//   }
+// }))
+
+// //发送信息给服务端
+// this.$socket.emit('login',{
+//   username: 'username',
+//   password: 'password'
+// });
+
+// //接收服务端的信息
+// this.sockets.subscribe('relogin', (data) => {
+//   console.log(data)
+// })
+// ---------------end socket---------------------
