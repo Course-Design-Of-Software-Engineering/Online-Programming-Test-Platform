@@ -209,7 +209,7 @@
 										console.log(formData.password)
 										that.COMMON.user=formData.email;
 										console.log('userid:',that.COMMON.user);
-										this.$message({
+										that.$message({
 											message: `Email: ${formData.email} ; Password: ${formData.password}`,
 											type: 'success'
 										});

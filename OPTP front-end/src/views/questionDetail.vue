@@ -24,44 +24,43 @@
 				</div>
 				<div class="infoInline">
 					<div class="info">
-						<h4 class="title">题目名称 </h4>
+						<h3 class="title">题目名称 </h3>
 					</div>
 					<!-- <p class="info">反转数组</p> -->
 					<p class="info">{{ questionTitle }}</p>
 				</div>
 			</div>
 			<div class="infoBlock">
-				<h4 class="title">题目要求 </h4>
+				<h3 class="title">题目要求 </h3>
 				<div class="infoRow">
 					<div class="infoInline">
 						<div class="info">
-							<h6 class="title">时间复杂度： </h6>
+							<h4 class="title">时间复杂度： </h4>
 						</div>
 						<p class="info">O(n)</p>
 					</div>
 					<div class="infoInline">
 						<div class="info">
-							<h6 class="title">空间复杂度： </h6>
+							<h4 class="title">空间复杂度： </h4>
 						</div>
 						<p class="info">nlogn</p>
 					</div>
 				</div>
 			</div>
 			<div class="infoBlock">
-				<h4 class="title">题目叙述 </h4>
-				<el-input class="text" v-model="statement" :disabled="true" :placeholder="questionDescription">
-				</el-input>
+				<h3 class="title">题目叙述</h3>
+				<p class="info_qusDescription">{{ questionDescription }}</p>
 			</div>
 			<div class="infoBlock">
-				<h4 class="title">示例 </h4>
+				<h3 class="title">示例 </h3>
 				<div class="exampleBlock">
-					<h6>输入</h6>
-					<el-input class="text" v-model="inputExample" :disabled="true" :placeholder="sample_in">
+					<h4>输入</h4>
+					<el-input class="text" v-model="sample_in">
 					</el-input>
 				</div>
 				<div class="exampleBlock">
-					<h6>输出</h6>
-					<el-input class="text" v-model="outputExample" :disabled="true" :placeholder="sample_out">
+					<h4>输出</h4>
+					<el-input class="text" v-model="sample_out">
 					</el-input>
 				</div>
 			</div>
@@ -99,13 +98,17 @@
 			},
 			showDetails() {
 				var that = this;
+				console.log("out")
 				this.$axios.get('/api/questionDetail', {
 					params: {
-						query: this.questionId
-						//query: this.$route.query.qusId
+						id: that.questionId
 					}
 				}).then(function(response) {
+					console.log("id res")
+					console.log(that.questionId)
 					if (response.data.status == '0') {
+						console.log("status==0")
+						console.log(that.questionId)
 						let detailResult = response.data.result.List;
 						if (detailResult.length == 0) {
 							that.$alert('找不到该题目！', '提示', {
@@ -113,8 +116,10 @@
 								callback: action => {}
 							});
 						} else {
+							console.log("id")
 							console.log(that.questionId)
-							console.log(detailResult)
+							console.log("details")
+							console.log(that.questionId)
 							that.questionTitle = detailResult[0].title;
 							that.questionSetter = detailResult[0].setter;
 							that.questionType = detailResult[0].type;
@@ -124,6 +129,9 @@
 							that.sample_in = detailResult[0].sample[0].in;
 							that.sample_out = detailResult[0].sample[0].out;
 						}
+					} else {
+						console.log("status!=0")
+						console.log(that.questionId)
 					}
 				}).catch(function(error) {
 					console.log(error);
@@ -157,7 +165,8 @@
 		margin: 0;
 	}
 
-	.info {
+	.info,
+	.info_qusDescription {
 		display: inline-block;
 		margin-right: 15px;
 	}
@@ -165,6 +174,12 @@
 	.infoInline {
 		margin-right: 50px;
 		display: inline-block;
+	}
+
+	.info_qusDescription {
+		text-align: left;
+		margin-top: 20px;
+		margin-bottom: 20px;
 	}
 
 	.title {
@@ -195,15 +210,12 @@
 
 	.checkBtn {
 		margin-top: 35px;
-		margin-bottom: 40px;
+		padding-bottom: 40px;
 		text-align: center;
 	}
 
-	h4 {
+	h4,
+	h3 {
 		margin-bottom: 9px;
-	}
-
-	h6 {
-		margin-bottom: 5px;
 	}
 </style>

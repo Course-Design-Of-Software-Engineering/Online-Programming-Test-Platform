@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<el-row style="text-align: left;margin-bottom: 0px;">
-			<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank">从题库中选择</el-button>
-			<el-button type="primary" plain size="medium" icon="el-icon-plus">新建题目</el-button>
+			<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank">从题库选择</el-button>
 			<el-button type="primary" size="medium" icon="el-icon-edit">编辑题目</el-button>
+			<el-button type="primary" plain size="medium" icon="el-icon-plus">新建</el-button>
 		</el-row>
 		<div class="questionPart">
 			<h4>题目要求</h4>
@@ -38,7 +38,9 @@
 		props: ['qid'],
 		data() {
 			return {
-				questionId: "",
+				inputExample: "",
+				outputExample: "",
+				questionId: qid,
 				questionTitle: "",   // 题目名称在父组件CodingPage中显示
 				questionType: "",
 				//questionLink: ""   // 题目链接？
@@ -57,12 +59,18 @@
 			showQus() {
 				this.questionId = qid;
 				var that = this;
-				this.$axios.get('/api/codingPage', {
+				console.log("id out")
+				console.log(that.questionId)
+				this.$axios.get('/api/questionDetail', {
 					params: {
-						query: this.questionId
+						id: this.questionId
 					}
 				}).then(function(response) {
+					console.log("id res")
+					console.log(that.questionId)
 					if (response.data.status == '0') {
+						console.log("status==0")
+						console.log(that.questionId)
 						let detailResult = response.data.result.List;
 						if (detailResult.length == 0) {
 							that.$alert('找不到该题目！', '提示', {
@@ -79,6 +87,9 @@
 							that.sample_in = detailResult[0].sample[0].in;
 							that.sample_out = detailResult[0].sample[0].out;
 						}
+					} else {
+						console.log("status!=0")
+						console.log(that.questionId)
 					}
 				}).catch(function(error) {
 					console.log(error);

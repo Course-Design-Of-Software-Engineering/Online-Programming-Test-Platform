@@ -63,7 +63,7 @@ router.post('/codingPage',(req, res)=>{
 //面试官新创建一个题目 
 router.post('/codingPage/createP',(req, res)=>{
 	//获取提交的题目信息
-	var newProblem = new problem(req.body)
+	var newProblem = new problem(req.body.formContent)
 
 	//将新建题目存入数据库中并渲染编程界面展示题目内容
 	newProblem.save(function(err, data){

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<fixedParts></fixedParts>
+		<fixedParts :usrname="userName" :usermail="userEmail"></fixedParts>
 		<div class="interviewTable">
 			<h3 style="margin-top: 15px;margin-bottom: 20px;">历史面试</h3>
 			<el-button @click="resetDateFilter">清除日期过滤器</el-button>
@@ -37,11 +37,36 @@
 		data() {
 			return {
 				tempList: [],
-				interviewList: []
-
+				interviewList: [],
+				userName: "",
+				userEmail: this.COMMON.user
 			}
 		},
 		methods: {
+			showName() {
+				var that = this;
+				this.$axios.get('/api/user_center', {
+					params: {
+						email: this.COMMON.user
+					}
+				}).then(function(response) {
+					if (response.data.status == '0') {
+						let detailResult = response.data.result.list;
+						if (detailResult.length == 0) {
+							that.$alert('找不到当前用户！', '提示', {
+								confirmButtonText: '确定',
+								callback: action => {}
+							});
+						} else {
+							console.log('userid:', that.COMMON.user)
+							console.log(detailResult)
+							that.userName = detailResult[0].username;
+						}
+					}
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
 			getHistoryInterview() {
 				return new Promise(resolve => {
 					setTimeout(() => {
@@ -117,9 +142,8 @@
 		},
 
 		mounted() {
-
 			this.getHistoryInterview();
-			
+			this.showName()
 		}
 	}
 </script>
