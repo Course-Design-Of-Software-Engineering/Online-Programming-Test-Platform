@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./router/user')
 const historyRouter = require('./router/history')
 const codingRouter = require('./router/coding')
+const socket = require('./router/socket')
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false)
 
@@ -50,7 +51,6 @@ app.use(userRouter)
 app.use(historyRouter)
 app.use(codingRouter)
 
-<<<<<<< Updated upstream
 //---------启动socket.io------------
 // var server = require('http').Server(app);
 // var io = require('./socketio');
@@ -60,21 +60,16 @@ app.use(codingRouter)
 //   console.log('server running at 127.0.0.1:3000');
 // });
 
-=======
->>>>>>> Stashed changes
 // 相当于 server.listen
 app.listen(3000, function () {
   console.log('app is running at port 3000.')
 })
-<<<<<<< Updated upstream
 
 
 
-date='2020-06-27T14:20:27.000000Z';
-console.log(date)
-var json_date = new Date(date).toJSON();
-console.log(json_date)
-new_data= new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, ''); 
-console.log(new_data) // 2020-06-27 14:20:27
-=======
->>>>>>> Stashed changes
+// date='2020-06-27T14:20:27.000000Z';
+// console.log(date)
+// var json_date = new Date(date).toJSON();
+// console.log(json_date)
+// new_data= new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, ''); 
+// console.log(new_data) // 2020-06-27 14:20:27
