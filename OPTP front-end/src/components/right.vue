@@ -1,13 +1,11 @@
 <template>
-	
-	<div style="width: 100%; float: right">
-		<button id="msgbtn" @click="sendFunc">发送</button>
-		<p>发送</p>
-		 <textarea v-model="send" name="" id="" cols="30" rows="10">{{send}}</textarea>
-		 <p>接收</p>
-		  <textarea v-model="receive" name="" id="" cols="30" rows="10">{{receive}}</textarea>
+	<h4>聊天板块</h4>
+	<!-- <div style="width: 100%; float: right">
+    	输入：<input type="text" id="msginput">
+		<button id="msgbtn">发送</button>
+		<div style="width: 65%; float: right" id="showbox">
 		</div>
-	</div>
+	</div> -->
 
 </template>
 
@@ -44,25 +42,6 @@
 	//     message.innerHTML = `收到的新消息是: ${data.msg}`;
 	//     showbox.appendChild(message);
 	// })
-	export default {
-		
-		data() {
-			return {
-				send:'',
-				receive:''
-	
-			}
-		},
-		methods: {
-			sendFunc(){
-				console.log(this.send);
-			}
-		},
-	
-		mounted() {
-	
-		}
-	}
 </script>
 
 <!--   -----------------  socketio test   ---------------------------   -->
