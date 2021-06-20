@@ -13,50 +13,35 @@
 		</el-row>
 		<div class="questionType">
 			<div class="buttDiv">
-				<el-button class="butt" type="info" plain>算法</el-button>
+				<el-button class="butt" type="info" @click='type1' plain>算法</el-button>
 			</div>
 			<div class="buttDiv">
-				<el-button class="butt" type="info" plain>SQL</el-button>
+				<el-button class="butt" type="info" @click='type2' plain>SQL</el-button>
 			</div>
 			<div class="buttDiv">
-				<el-button class="butt" type="info" plain>前端</el-button>
+				<el-button class="butt" type="info" @click='type3' plain>前端</el-button>
 			</div>
 		</div>
 		<div class="questionTable">
 			<el-button icon="el-icon-s-promotion" circle @click="toTemp"></el-button>
 			<el-button @click="resetDateFilter">清除日期过滤器</el-button>
 			<el-button @click="clearFilter">清除所有过滤器</el-button>
-			<el-table ref="filterTable" :data="tableData" style="width: 100%">
-				<el-table-column prop="title" label="题目名称" width="180" column-key="date">
-				</el-table-column>
-				<el-table-column prop="type" label="类型" width="100"
-					:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]" :filter-method="filterTag"
-					filter-placement="bottom-end">
-					<template slot-scope="scope">
-						<el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>
-							{{scope.row.tag}}
-						</el-tag>
-					</template>
-				</el-table-column>
-				<!-- 无法实现点击表内文字内容进行跳转 -->
-				<router-link to="/historyQuestion">
-					<el-table-column prop="judgement" label="评判" :formatter="formatter">
-					</el-table-column>
-				</router-link>
-				<el-table-column prop="interview" label="面试场次" :formatter="formatter">
-				</el-table-column>
-				<el-table-column prop="position" label="岗位" width="100"
-					:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]" :filter-method="filterTag"
-					filter-placement="bottom-end">
-					<template slot-scope="scope">
-						<el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>
-							{{scope.row.tag}}
-						</el-tag>
-					</template>
-				</el-table-column>
-				<el-table-column prop="" label="时间" sortable="true" :formatter="formatter">
-				</el-table-column>
-			</el-table>
+			<el-table ref="filterTable" :data="questionList" style="width: 100%">
+						<el-table-column prop="id" label="题目ID" width="180" :formatter="formatter">
+							<template slot-scope="scope">{{scope.row.id}}</template>
+						</el-table-column>
+						<el-table-column prop="title" label="题目名称" width="100" :formatter="formatter">
+							<template slot-scope="scope">{{scope.row.title}}</template>
+						</el-table-column>
+						<!-- <el-table-column prop="interviewer" label="面试官" :formatter="formatter">
+						</el-table-column> -->
+						<el-table-column prop="date" label="类型" :formatter="formatter">
+							<template slot-scope="scope">{{scope.row.type}}</template>
+						</el-table-column>
+						<el-table-column prop="setter" label="出题者" :formatter="formatter">
+							<template slot-scope="scope">{{scope.row.setter}}</template>
+						</el-table-column>
+					</el-table>
 		</div>
 	</div>
 </template>
@@ -65,30 +50,70 @@
 	export default {
 		data() {
 			return {
-				tableData: [{
-					date: '2016-05-02',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1518 弄',
-					tag: '家'
-				}, {
-					date: '2016-05-04',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1517 弄',
-					tag: '公司'
-				}, {
-					date: '2016-05-01',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1519 弄',
-					tag: '家'
-				}, {
-					date: '2016-05-03',
-					name: '王小虎',
-					address: '上海市普陀区金沙江路 1516 弄',
-					tag: '公司'
-				}]
+				type: '',
+				questionList: []
 			}
 		},
 		methods: {
+			//按钮传递类型
+			type1() {
+				console.log('entring type click');
+				if (this.type == '算法')
+					return;
+				this.type = '算法';
+				this.getQuestionBank();
+			},
+			type2() {
+				if (this.type == 'SQL')
+					return;
+				this.type = 'SQL';
+				this.questionList=[];
+				this.getQuestionBank();
+			},
+			type3() {
+				if (this.type == '前端')
+					return;
+				this.type = '前端';
+				this.questionList=[];
+				this.getQuestionBank();
+			},
+			getQuestionBank() {
+				let that = this;
+				this.$axios.get('/api/questionBank', {
+						params: {
+							type: that.type
+						}
+					})
+					.then((res) => {
+						if (res.data.status == '0') {
+							console.log('1', res);
+							console.log(res.data.result.List);
+							that.tempList = res.data.result.List;
+							console.log(that.tempList);
+							that.loadQuestionList();
+						} else {
+							console.log('getInfo status Error!');
+						}
+					})
+			},
+			loadQuestionList() {
+				let i = 0;
+				for (i = 0; i < this.tempList.length; i++) {
+					// console.log(this.tempList[i]['company']);
+					let temp = {
+						id:this.tempList[i]['id'],
+						title:this.tempList[i]['title'],
+						setter:this.tempList[i]['setter'],
+						type:this.tempList[i]['type'],
+					}
+					// console.log('temp:',temp);
+					this.questionList.push(temp);
+				}
+				console.log(this.questionList);
+				// }, 1000)
+				//  });
+
+			},
 			toTemp() {
 				this.$router.push("/questionDetail");
 			},
@@ -115,8 +140,8 @@
 			// 当某个题目（其名称或所在的那一行）被点击时调用的函数
 			chooseQuestion(questionId) {
 				this.$router.push({
-					path:'/questionDetail',
-					query:{
+					path: '/questionDetail',
+					query: {
 						qusId: questionId
 					}
 				})

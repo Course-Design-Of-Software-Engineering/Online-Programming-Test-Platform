@@ -5,30 +5,29 @@
 		<h3 style="margin-top: 15px;margin-bottom: 20px;">历史题目</h3>
 		<el-button @click="resetDateFilter">清除日期过滤器</el-button>
 		<el-button @click="clearFilter">清除所有过滤器</el-button>
-		<el-table ref="filterTable" :data="tableData" style="width: 100%">
-			<el-table-column prop="title" label="题目名称" width="180" column-key="date">
+		<el-table ref="filterTable" :data="questionList" style="width: 100%">
+			<el-table-column prop="title" label="题目名称" width="180" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.title}}</template>
 			</el-table-column>
-			<el-table-column prop="type" label="类型" width="100"
-				:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]" :filter-method="filterTag"
-				filter-placement="bottom-end">
-				<template slot-scope="scope">
-					<el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>{{scope.row.tag}}
-					</el-tag>
-				</template>
+			<el-table-column prop="type" label="类型" width="100" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.type}}</template>
 			</el-table-column>
+			<!-- <el-table-column prop="interviewer" label="面试官" :formatter="formatter">
+			</el-table-column> -->
 			<el-table-column prop="judgement" label="评判" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.judgement}}</template>
+			</el-table-column>
+			<el-table-column prop="score" label="得分" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.score}}</template>
 			</el-table-column>
 			<el-table-column prop="interview" label="面试场次" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.interview}}</template>
 			</el-table-column>
-			<el-table-column prop="position" label="岗位" width="100"
-				:filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]" :filter-method="filterTag"
-				filter-placement="bottom-end">
-				<template slot-scope="scope">
-					<el-tag :type="scope.row.tag === '家' ? 'primary' : 'success'" disable-transitions>{{scope.row.tag}}
-					</el-tag>
-				</template>
-			</el-table-column>
-			<el-table-column prop="" label="时间" sortable="true" :formatter="formatter">
+<!-- 			<el-table-column prop="position" label="岗位" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.position}}</template>
+			</el-table-column> -->
+			<el-table-column prop="date" label="时间" :formatter="formatter">
+				<template slot-scope="scope">{{scope.row.date}}</template>
 			</el-table-column>
 		</el-table>
 	</div>
@@ -42,53 +41,62 @@
 			},
 			data() {
 				return {
-					questionList:[],
-					tableData: [{
-						date: '2016-05-02',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1518 弄',
-						tag: '家'
-					}, {
-						date: '2016-05-04',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1517 弄',
-						tag: '公司'
-					}, {
-						date: '2016-05-01',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1519 弄',
-						tag: '家'
-					}, {
-						date: '2016-05-03',
-						name: '王小虎',
-						address: '上海市普陀区金沙江路 1516 弄',
-						tag: '公司'
-					}]
+					tempList: [],
+					questionList: []
+					
 				}
 			},
 			methods: {
 				getHistoryQuestion() {
-					let that=this;
-					this.$axios.get('/api/historyQuestion',{
-						params:{
-							interviewee:this.COMMON.user
-						}
-					})
-						.then((res) => {
-							console.log(res);
-							if(res.data.status=='0'){
-								console.log(res.data.result.list);
-								that.questionList=res.data.result.list;
+					// return new Promise(resolve => {
+					// 	setTimeout(() => {
+							let that = this;
+							this.$axios.get('/api/historyQuestion', {
+									params: {
+										email: this.COMMON.user
+									}
+								})
+								.then((res) => {
+									if (res.data.status == '0') {
+										console.log('1', res);
+										console.log(res.data.result.list);
+										that.tempList = res.data.result.list;
+										console.log(that.tempList);
+										that.loadQuestionList();
+									} else {
+										console.log('getInfo status Error!');
+									}
 				
-							}
-							else{
-								console.log('getInfo status Error!');
-							}
-							
-						})
-						.catch((error) => {
-							console.log(error);
-						});
+								})
+								.catch((error) => {
+									console.log(error);
+								});
+					// 	}, 3000)
+					// });
+				},
+				loadQuestionList() {
+					// return new Promise(resolve => {
+					//    setTimeout(() => {
+					// console.log('2');
+					// console.log(this.tempList);
+					let i = 0;
+					for (i = 0; i < this.tempList.length; i++) {
+						// console.log(this.tempList[i]['company']);
+						let temp = {
+							title: this.tempList[i]['title'],
+							type:this.tempList[i]['type'],
+							judgement:this.tempList[i]['judgement'],
+							score:this.tempList[i]['score'],
+							interview:this.tempList[i]['interview'],
+							// position:this.tempList[i]['position'],
+							date:this.tempList[i]['date']
+						}
+						// console.log('temp:',temp);
+						this.questionList.push(temp);
+					}
+					console.log(this.questionList);
+					// }, 1000)
+					//  });
 				},
 				resetDateFilter() {
 					this.$refs.filterTable.clearFilter('date');
@@ -107,6 +115,9 @@
 					const property = column['property'];
 					return row[property] === value;
 				}
+			},
+			mounted(){
+				this.getHistoryQuestion();
 			}
 		}
 	</script>
