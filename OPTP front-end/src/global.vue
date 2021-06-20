@@ -2,11 +2,10 @@
 </template>
 
 <script>
-	let user='';
-	 export default {
-	        user
-	    }
-	
+	let user = '';
+	export default {
+		user
+	}
 </script>
 
 <style>

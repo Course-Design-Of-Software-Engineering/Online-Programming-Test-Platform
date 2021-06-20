@@ -151,6 +151,7 @@
 </template>
 
 <script>
+	// import global from '../global.vue'
 	export default {
 		name: 'register',
 		data() {
@@ -187,7 +188,7 @@
 						var formData = this.intervieweeInfo;
 						if (formName == 'interviewerInfo') {
 							formData = this.interviewerInfo;
-						};
+						}
 						var that = this;
 						if (valid) {
 							// alert('Email:'+this.intervieweeInfo.email+';Password:'+this.intervieweeInfo.password);

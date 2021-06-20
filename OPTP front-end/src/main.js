@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import  codemirror  from 'vue-codemirror'
+import codemirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -20,9 +20,9 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+	el: '#app',
+	router,
+	render: h => h(App)
 })
 
 // ---------------start socket---------------------

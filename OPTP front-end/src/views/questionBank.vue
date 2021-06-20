@@ -28,10 +28,10 @@
 			<el-button @click="clearFilter">清除所有过滤器</el-button>
 			<el-table ref="filterTable" :data="questionList" style="width: 100%">
 				<el-table-column prop="id" label="题目ID" width="180" :formatter="formatter">
-					<template slot-scope="scope">{{scope.row.id}}</template>
+					<template slot-scope="scope"><el-link v-on:click="chooseQuestion(scope.row.id)">{{scope.row.id}}</el-link></template>
 				</el-table-column>
 				<el-table-column prop="title" label="题目名称" width="100" :formatter="formatter">
-					<template slot-scope="scope">{{scope.row.title}}</template>
+					<template slot-scope="scope"><el-link v-on:click="chooseQuestion(scope.row.id)">{{scope.row.title}}</el-link></template>
 				</el-table-column>
 				<!-- <el-table-column prop="interviewer" label="面试官" :formatter="formatter">
 									</el-table-column> -->
@@ -142,7 +142,7 @@
 				const property = column['property'];
 				return row[property] === value;
 			},
-			// 当某个题目（其名称或所在的那一行）被点击时调用的函数
+			// 当某个题目的id或名称被点击时调用的函数
 			chooseQuestion(questionId) {
 				this.$router.push({
 					path: '/questionDetail',
