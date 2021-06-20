@@ -13,7 +13,6 @@
         </div>
 			</div>
 		</div>
-	</div>
 
 		<div class="right content">
 			<div class="header im-title">{{title}}</div>
