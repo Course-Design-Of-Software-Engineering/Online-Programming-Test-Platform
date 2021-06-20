@@ -27,21 +27,21 @@
 			<el-button @click="resetDateFilter">清除日期过滤器</el-button>
 			<el-button @click="clearFilter">清除所有过滤器</el-button>
 			<el-table ref="filterTable" :data="questionList" style="width: 100%">
-						<el-table-column prop="id" label="题目ID" width="180" :formatter="formatter">
-							<template slot-scope="scope">{{scope.row.id}}</template>
-						</el-table-column>
-						<el-table-column prop="title" label="题目名称" width="100" :formatter="formatter">
-							<template slot-scope="scope">{{scope.row.title}}</template>
-						</el-table-column>
-						<!-- <el-table-column prop="interviewer" label="面试官" :formatter="formatter">
-						</el-table-column> -->
-						<el-table-column prop="date" label="类型" :formatter="formatter">
-							<template slot-scope="scope">{{scope.row.type}}</template>
-						</el-table-column>
-						<el-table-column prop="setter" label="出题者" :formatter="formatter">
-							<template slot-scope="scope">{{scope.row.setter}}</template>
-						</el-table-column>
-					</el-table>
+				<el-table-column prop="id" label="题目ID" width="180" :formatter="formatter">
+					<template slot-scope="scope">{{scope.row.id}}</template>
+				</el-table-column>
+				<el-table-column prop="title" label="题目名称" width="100" :formatter="formatter">
+					<template slot-scope="scope">{{scope.row.title}}</template>
+				</el-table-column>
+				<!-- <el-table-column prop="interviewer" label="面试官" :formatter="formatter">
+									</el-table-column> -->
+				<el-table-column prop="date" label="类型" :formatter="formatter">
+					<template slot-scope="scope">{{scope.row.type}}</template>
+				</el-table-column>
+				<el-table-column prop="setter" label="出题者" :formatter="formatter">
+					<template slot-scope="scope">{{scope.row.setter}}</template>
+				</el-table-column>
+			</el-table>
 		</div>
 	</div>
 </template>
@@ -67,14 +67,14 @@
 				if (this.type == 'SQL')
 					return;
 				this.type = 'SQL';
-				this.questionList=[];
+				this.questionList = [];
 				this.getQuestionBank();
 			},
 			type3() {
 				if (this.type == '前端')
 					return;
 				this.type = '前端';
-				this.questionList=[];
+				this.questionList = [];
 				this.getQuestionBank();
 			},
 			getQuestionBank() {
@@ -101,10 +101,10 @@
 				for (i = 0; i < this.tempList.length; i++) {
 					// console.log(this.tempList[i]['company']);
 					let temp = {
-						id:this.tempList[i]['id'],
-						title:this.tempList[i]['title'],
-						setter:this.tempList[i]['setter'],
-						type:this.tempList[i]['type'],
+						id: this.tempList[i]['id'],
+						title: this.tempList[i]['title'],
+						setter: this.tempList[i]['setter'],
+						type: this.tempList[i]['type'],
 					}
 					// console.log('temp:',temp);
 					this.questionList.push(temp);
@@ -118,7 +118,12 @@
 				this.$router.push("/questionDetail");
 			},
 			backItv() {
-				this.$router.push("/codingPage");
+				this.$router.push({
+					path: '/codingPage',
+					query: {
+						qusId: "0001"
+					}
+				})
 			},
 			resetDateFilter() {
 				this.$refs.filterTable.clearFilter('date');

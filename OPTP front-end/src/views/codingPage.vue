@@ -21,7 +21,7 @@
 		<div class="codingPage">
 			<el-row :gutter="5">
 				<el-col :span="7">
-					<left></left>
+					<left :qid="questionId"></left>
 				</el-col>
 				<el-col :span="1">
 					<el-divider direction="vertical"></el-divider>
@@ -48,6 +48,7 @@
 	export default {
 		data() {
 			return {
+				questionId: this.$route.query.qusId,   //是否像用户id那样用全局变量保存起来？
 				timevalue: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
 			};
 		},

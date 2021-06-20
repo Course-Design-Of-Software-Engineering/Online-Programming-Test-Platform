@@ -31,7 +31,12 @@
 					cancelButtonText: '取消',
 					type: 'success'
 				}).then(() => {
-					this.$router.push("/codingPage");
+					this.$router.push({
+						path:'/codingPage',
+						query:{
+							qusId: "0001"
+						}
+					});
 				}).catch(() => {
 					// this.$message({
 					// 	type: 'info',

@@ -68,9 +68,9 @@
 			<div class="infoBlock">
 				<h4 class="title">说明 </h4>
 			</div>
-			<div class="infoBlock" style="margin-top: 35px;text-align: center;">
-				<el-button type="primary">确认选题</el-button>
-				<el-button>返回面试界面</el-button>
+			<div class="checkBtn">
+				<el-button type="primary" @click="decideQuestion()">确认选题</el-button>
+				<el-button @click="backItv()">返回面试界面</el-button>
 			</div>
 		</div>
 	</div>
@@ -80,7 +80,7 @@
 	export default {
 		data() {
 			return {
-				questionId: this.$route.query.qusId,   //是否能这样直接调用赋值？
+				questionId: this.$route.query.qusId,
 				questionTitle: "",
 				questionSetter: "",
 				questionType: "",
@@ -91,7 +91,7 @@
 			}
 		},
 		mounted() {
-		  this.showDetails()
+			this.showDetails()
 		},
 		methods: {
 			backbnk() {
@@ -108,7 +108,7 @@
 					if (response.data.status == '0') {
 						let detailResult = response.data.result.List;
 						if (detailResult.length == 0) {
-							that.$alert('找不到该题目！', '？', {
+							that.$alert('找不到该题目！', '提示', {
 								confirmButtonText: '确定',
 								callback: action => {}
 							});
@@ -118,7 +118,7 @@
 							that.questionTitle = detailResult[0].title;
 							that.questionSetter = detailResult[0].setter;
 							that.questionType = detailResult[0].type;
-							that.questionLink = detailResult[0].link;
+							// that.questionLink = detailResult[0].link;
 							that.questionDescription = detailResult[0].description;
 							// 数据库json格式为 sample:[{in:String, out:String}] 不确定下面索引的写法
 							that.sample_in = detailResult[0].sample[0].in;
@@ -128,6 +128,22 @@
 				}).catch(function(error) {
 					console.log(error);
 				});
+			},
+			backItv() {
+				this.$router.push({
+					path: '/codingPage',
+					query: {
+						qusId: "0001"
+					}
+				})
+			},
+			decideQuestion() {
+				this.$router.push({
+					path: '/codingPage',
+					query: {
+						qusId: this.questionId
+					}
+				})
 			}
 		}
 	}
@@ -160,10 +176,9 @@
 	}
 
 	.infoInline,
-	.infoBlock {
-		padding:  10px 150px;
-		
-	
+	.infoBlock,
+	.checkBtn {
+		padding: 10px 150px;
 	}
 
 	.text {
@@ -176,14 +191,19 @@
 		background-color: #f0f0f0;
 		border: #000000;
 		margin: 0 auto;
-		
-		
+	}
+
+	.checkBtn {
+		margin-top: 35px;
+		margin-bottom: 40px;
+		text-align: center;
 	}
 
 	h4 {
 		margin-bottom: 9px;
 	}
-	h6{
+
+	h6 {
 		margin-bottom: 5px;
 	}
 </style>
