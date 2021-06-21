@@ -23,8 +23,6 @@
 			</div>
 		</div>
 		<div class="questionTable">
-			<el-button @click="resetDateFilter">清除日期过滤器</el-button>
-			<el-button @click="clearFilter">清除所有过滤器</el-button>
 			<el-table ref="filterTable" :data="questionList" style="width: 100%">
 				<el-table-column prop="id" label="题目ID" width="180" :formatter="formatter">
 					<!-- <template slot-scope="scope">{{scope.row.id}}</template> -->
@@ -55,7 +53,9 @@
 			}
 		},
 		mounted() {
-			this.type1()
+			this.type1();
+			this.type2();
+			this.type3()
 		},
 		methods: {
 			//按钮传递类型
@@ -124,12 +124,6 @@
 						qusId: "0001"
 					}
 				})
-			},
-			resetDateFilter() {
-				this.$refs.filterTable.clearFilter('date');
-			},
-			clearFilter() {
-				this.$refs.filterTable.clearFilter();
 			},
 			//formatter(row, column) {
 			formatter(row) {
