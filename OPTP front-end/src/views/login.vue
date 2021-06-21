@@ -75,16 +75,19 @@
 										callback: action => {}
 									});
 								} else {
-									console.log(loginResult)
+								// 	console.log(loginResult)
 									console.log(that.nameValidateForm.email)
 									console.log(that.nameValidateForm.password)
 									// that.$store.commit('login', nameValidateForm.email);
 									that.COMMON.user=that.nameValidateForm.email;
-									console.log('userid:',that.COMMON.user);
-									that.$message({
-										message: `Email: ${that.nameValidateForm.email} ; Password: ${that.nameValidateForm.password}`,
-										type: 'success'
-									});
+									// console.log(response.data.result.list[0]['identity']);
+									that.COMMON.identity =  response.data.result.list[0]['identity'];
+									// console.log(that.COMMON.identity);
+									// console.log('userid:',that.COMMON.user);
+									// that.$message({
+									// 	message: `Email: ${that.nameValidateForm.email} ; Password: ${that.nameValidateForm.password}`,
+									// 	type: 'success'
+									// });
 									// that.$router.push('/intervieweeHome')
 									that.$router.push({
 										path:'/intervieweeHome',
