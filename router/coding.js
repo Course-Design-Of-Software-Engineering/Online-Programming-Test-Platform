@@ -66,19 +66,82 @@ router.post('/codingPage/createP',(req, res)=>{
 	//var newProblem = new problem(req.body.formContent)
 	//console.log("接收到的新建题目",newProblem)
 	//console.log("接收到的新建题目：",req.body.formContent)
-	var existedProblem = 10
-	existedProblem = existedProblem + 1 
-	var newId = "00" + existedProblem
-	console.log("newid:",newId)
+	//var existedProblem = 10
+	//existedProblem = existedProblem + 1 
+	//var newId = "00" + existedProblem
+	//console.log("newid:",newId)
 
-	//将新建题目存入数据库中并渲染编程界面展示题目内容
-	newProblem.save(function(err, data){
-		if(err){
-			res.json({
-				status:'1',
-				msg:err.message
-			})
-		}else{
+	problem.find((err,data)=>{
+		if(!err)
+		//创建新的题目id:已有题目数+1
+		//console.log("existed problemd data:",data)
+		var existedProblem = data.length
+		//console.log("existed problem count:",existedProblem)
+		existedProblem = existedProblem + 1 
+		var newId = "00" + existedProblem
+
+		//console.log("existed problem count:",existedProblem)
+		//保存接收到的题目输入输出示例
+		var newSamplel = []
+		var temp = {
+			in:req.body.formContent.sample_in,
+			out:req.body.formContent.sample_out
+		}
+		newSamplel.push(temp)
+
+		//将新建题目存入数据库中并渲染编程界面展示题目内容
+		problem.create({
+			id:newId,
+			description:req.body.formContent.questionDescription,
+			title:req.body.formContent.questionTitle,
+			type:req.body.formContent.questionType,
+			sample:newSamplel
+		},function(err, data){
+			//console.log("create data:",data)
+			if(err){
+				res.json({
+					status:'1',
+					msg:err.message
+				})
+			}else{
+				res.json({
+					status:'0',
+					msg:'题目创建成功！',
+					result:{
+						count:data.length,
+						List:data
+					}
+				})
+			}
+		})
+	})
+	
+})
+
+//面试官修改一个题目
+router.post('/codingPage/EditP',(req, res)=>{
+
+	//获取提交的题目信息
+	var pid = req.body.id
+	var newDescription = req.body.formContent.questionDescription
+	var newTitle = req.body.formContent.questionTitle
+	var newType = req.body.formContent.questionType
+	var newSamplel = []
+		var temp = {
+			in:req.body.formContent.sample_in,
+			out:req.body.formContent.sample_out
+		}
+	newSamplel.push(temp)
+	
+	//在数据库中修改
+	problem.findOneAndUpdate({id:pid},{
+		description:newDescription,
+		title:newTitle,
+		type:newType,
+		sample:newSamplel
+	},function(err,data){
+		console.log("updata data:",data)
+		if (err){ 
 			res.json({
 			  status:1, // 状态码应该为500 服务端出错
 			  msg:err.message
