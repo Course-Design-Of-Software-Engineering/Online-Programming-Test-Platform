@@ -124,7 +124,7 @@
 
 						<!-- 按钮模块 -->
 						<div>
-							<el-button type="success" @click='submit'>提交代码</el-button>
+							<el-button type="success" @click='submit' :style="[{display:buttDisplay2}]">提交代码</el-button>
 						</div>
 					</div>
 
@@ -144,6 +144,7 @@
 	//import left from '../components/left.vue'
 	// import mid from '../components/mid.vue'
 	import right from '../components/right.vue'
+	//codeMirror的引入
 	import {
 		codemirror
 	} from 'vue-codemirror'
@@ -160,7 +161,10 @@
 				flag: true,
 				timeDemand: "O(n)",
 				spaceDemand: "nlogn",
+				//左块的按钮显示属性
 				buttDisplay:'default',
+				//中部的按钮显示属性
+				buttDisplay2:'default'
 				codeLng: "C++",
 				// 题目表单
 				questionCnt: {
@@ -183,7 +187,7 @@
 					styleSelectedText: true,
 					line: true,
 					foldGutter: true,
-
+					readOnly:false
 				}
 			}
 		},
@@ -194,9 +198,15 @@
 		},
 		mounted() {
 			this.showQus()
+			//设置不同身份的功能限制
 			if(this.COMMON.identity=='候选人')
 			{
 				this.buttDisplay='none';
+			}
+			//为面试官的时候，不能更改代码编辑框内容，并且失去光标
+			else{
+				this.cmOptions.readOnly='nocursor';
+				this.buttDisplay2='none';
 			}
 		},
 		methods: {
