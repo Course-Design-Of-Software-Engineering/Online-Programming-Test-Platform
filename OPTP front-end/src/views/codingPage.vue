@@ -24,11 +24,14 @@
 					<!-- <left :qid="questionId"></left> -->
 					<div>
 						<el-row style="text-align: left;margin-bottom: 0px;">
-							<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank()" :style="[{display:buttDisplay}]">从题库选择
+							<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank()"
+								:style="[{display:buttDisplay}]">从题库选择
 							</el-button>
-							<el-button type="primary" size="medium" icon="el-icon-edit" @click="editQus()()" :style="[{display:buttDisplay}]">编辑题目
+							<el-button type="primary" size="medium" icon="el-icon-edit" @click="editQus()()"
+								:style="[{display:buttDisplay}]">编辑题目
 							</el-button>
-							<el-button type="primary" plain size="medium" icon="el-icon-plus" @click="createQus()" :style="[{display:buttDisplay}]">新建
+							<el-button type="primary" plain size="medium" icon="el-icon-plus" @click="createQus()"
+								:style="[{display:buttDisplay}]">新建
 							</el-button>
 						</el-row>
 						<div class="questionPart">
@@ -93,7 +96,8 @@
 							</el-form>
 						</div>
 						<div class="buttGroup">
-							<el-button type="primary" @click="submitForm('questionCnt')" :style="[{display:buttDisplay}]">提交编辑</el-button>
+							<el-button type="primary" @click="submitForm('questionCnt')"
+								:style="[{display:buttDisplay}]">提交编辑</el-button>
 							<el-button @click="cancelEdt()" :style="[{display:buttDisplay}]">取消 </el-button>
 						</div>
 					</div>
@@ -102,7 +106,6 @@
 					<el-divider direction="vertical"></el-divider>
 				</el-col>
 				<el-col :span="10">
-
 					<!-- 编程板块 -->
 					<div>
 						<div style="text-align: left;">
@@ -115,25 +118,44 @@
 						</div>
 						<!-- 代码模块 -->
 						<div>
-							
 							<codemirror ref="mycode" v-model="curCode" :options="cmOptions" class="codeMirror">
 							</codemirror>
 							<button @click="printCode">print</button>
 						</div>
 						<el-divider></el-divider>
-
 						<!-- 按钮模块 -->
 						<div>
 							<el-button type="success" @click='submit' :style="[{display:buttDisplay2}]">提交代码</el-button>
 						</div>
 					</div>
-
 				</el-col>
 				<el-col :span="1">
 					<el-divider direction="vertical"></el-divider>
 				</el-col>
 				<el-col :span="5">
-					<right></right>
+					<!-- <right></right> -->
+					<div class="rightContent">
+						<div class="headerIM">与{{this.otherName}}在线聊天</div>
+						<div class="bodyIM" id="IMrecord">
+							<div class="ulIM">
+								<div class="liIM" :class="{user: item.uid == uid}" v-for="item in currentMessage">
+									<template v-if="item.type===1">
+										<p class="joinTips">{{item.msg}}</p>
+									</template>
+									<template v-else>
+										<p class="messageDate">
+											<span class="mNickname">{{item.nickname}}</span> {{item.date}}
+										</p>
+										<p class="messageBox">{{item.msg}}</p>
+									</template>
+								</div>
+							</div>
+						</div>
+						<div class="footerIM">
+							<input type="text" v-model="msg" placeholder="请输入内容">
+							<button @click="send">发送</button>
+						</div>
+					</div>
 				</el-col>
 			</el-row>
 		</div>
@@ -141,9 +163,12 @@
 </template>
 
 <script>
-	//import left from '../components/left.vue'
+	// import left from '../components/left.vue'
 	// import mid from '../components/mid.vue'
-	import right from '../components/right.vue'
+	// import right from '../components/right.vue'
+	
+	import moment from 'moment' //用于在线聊天
+	
 	//codeMirror的引入
 	import {
 		codemirror
@@ -157,14 +182,14 @@
 		data() {
 			return {
 				questionId: this.$route.query.qusId, //是否像用户id那样用全局变量保存起来？
-				timevalue: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+				timevalue: [new Date(2021, 9, 10, 8, 40), new Date(2021, 9, 10, 9, 40)],
 				flag: true,
 				timeDemand: "O(n)",
 				spaceDemand: "nlogn",
 				//左块的按钮显示属性
-				buttDisplay:'default',
+				buttDisplay: 'default',
 				//中部的按钮显示属性
-				buttDisplay2:'default',
+				buttDisplay2: 'default',
 				codeLng: "C++",
 				// 题目表单
 				questionCnt: {
@@ -187,27 +212,77 @@
 					styleSelectedText: true,
 					line: true,
 					foldGutter: true,
-					readOnly:false
-				}
+					readOnly: false
+				},
+				//聊天模块
+				uid: this.COMMON.user,
+				otherID: this.$route.query.invEmail,
+				userName: '',
+				otherName: '',
+				socket: '',
+				msg: '',
+				messageList: [],
+				bridge: [this.COMMON.user, this.$route.query.invEmail]   //严格一对一聊天
 			}
 		},
 		components: {
 			//left,
-			codemirror,
-			right
+			codemirror
+			//right
 		},
 		mounted() {
-			this.showQus()
+			this.showQus();   //左边显示面试题
+			this.getNames();   //从数据库读取面试官和面试者的用户名（可能存在同步异步问题）
+			let vm = this;
+			this.conWebSocket();   //连接socket服务器
 			//设置不同身份的功能限制
-			if(this.COMMON.identity=='候选人')
-			{
-				this.buttDisplay='none';
+			if (this.COMMON.identity == '候选人') {
+				this.buttDisplay = 'none';
 			}
 			//为面试官的时候，不能更改代码编辑框内容，并且失去光标
-			else{
-				this.cmOptions.readOnly='nocursor';
-				this.buttDisplay2='none';
+			else {
+				this.cmOptions.readOnly = 'nocursor';
+				this.buttDisplay2 = 'none';
 			}
+			// 用回车键发送消息
+			document.onkeydown = function(event) {
+				var e = event || window.event;
+				if (e && e.keyCode == 13) { //回车键的键值为13
+					vm.send()
+				}
+			}
+			// 向socket服务器发送当前用户的信息
+			window.onbeforeunload = function(e) {
+				vm.socket.send(JSON.stringify({
+					uid: vm.uid,
+					type: 2,
+					nickname: vm.userName,
+					bridge: vm.bridge   //是否仅先向服务器发送[]？
+				}));
+			}
+		},
+		computed: {   //computed相当于带响应式依赖与缓存的method
+			currentMessage() {
+				let vm = this;
+				let data = vm.messageList.filter(item => {
+					if (item.type === 1) {
+						return item;
+					} else if (item.bridge.length) {
+						console.log("item.bridge")
+						console.log(item)
+						console.log(item.bridge)
+						console.log(item.bridge.length)
+						console.log(item.bridge.sort().join(','))
+						console.log(vm.bridge.sort().join(','))
+						return item.bridge.sort().join(',') == vm.bridge.sort().join(',')
+					}
+				})
+				data.map(item => {
+					item.status = 0
+					return item;
+				})
+				return data;
+			},
 		},
 		methods: {
 			backHome() {
@@ -357,6 +432,120 @@
 				}
 				if (this.mode == 'Shell') {
 					this.cmOptions.mode = 'text/shell'
+				}
+			},
+			getNames() {
+				var that = this;
+				//获取当前用户名字
+				this.$axios.get('/api/user_center', {
+					params: {
+						email: this.COMMON.user
+					}
+				}).then(function(response) {
+					if (response.data.status == '0') {
+						let detailResult = response.data.result.list;
+						if (detailResult.length == 0) {
+							that.$alert('找不到当前用户！', '提示', {
+								confirmButtonText: '确定',
+								callback: action => {}
+							});
+						} else {
+							console.log('userid:', that.COMMON.user)
+							console.log(detailResult)
+							that.userName = detailResult[0].username;
+						}
+					}
+				}).catch(function(error) {
+					console.log(error);
+				});
+				//获取聊天的另一个用户的名字
+				this.$axios.get('/api/user_center', {
+					params: {
+						email: this.otherID
+					}
+				}).then(function(response) {
+					if (response.data.status == '0') {
+						let detailResult = response.data.result.list;
+						if (detailResult.length == 0) {
+							that.$alert('找不到当前用户！', '提示', {
+								confirmButtonText: '确定',
+								callback: action => {}
+							});
+						} else {
+							console.log('otherid:', that.otherID)
+							console.log(detailResult)
+							that.otherName = detailResult[0].username;
+						}
+					}
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
+			//触发发送消息事件
+			send() {
+				this.msg = this.msg.trim();  //检查输入框是否为空
+				if (!this.msg) {
+					return
+				}
+				if (!this.bridge.length) {
+					this.$message({
+						type: 'error',
+						message: '未与对方建立联系'
+					})
+					return;
+				}
+				this.sendMessage(100, this.msg)   //将消息发送至服务器，类型码为100
+			},
+			//将消息发送至服务器
+			sendMessage(type, msg) {
+				this.socket.send(JSON.stringify({
+					uid: this.uid,
+					type: type,
+					nickname: this.userName,
+					msg: msg,
+					bridge: this.bridge
+				}));
+				this.msg = '';
+			},
+			//连接socket服务器
+			conWebSocket() {
+				let vm = this;
+				if (window.WebSocket) {
+					vm.socket = new WebSocket('ws://localhost:8001');
+					let socket = vm.socket;
+					//连接建立时触发的WebSocket事件
+					socket.onopen = function(e) {
+						console.log("连接服务器成功");
+						vm.$message({
+							type: 'success',
+							message: '连接服务器成功'
+						})
+						if (!vm.uid) {
+							vm.uid = 'web_im_' + moment().valueOf();
+							localStorage.setItem('WEB_IM_USER', JSON.stringify({
+								uid: vm.uid,
+								nickname: vm.userName
+							}))
+						}
+						vm.sendMessage(1)
+					}
+					//连接关闭时触发的WebSocket事件
+					socket.onclose = function(e) {
+						console.log("服务器关闭");
+					}
+					//通信发生错误时触发的WebSocket事件
+					socket.onerror = function() {
+						console.log("连接出错");
+					}
+					//客户端接收服务端数据时触发的WebSocket事件（接收服务器的消息）
+					socket.onmessage = function(e) {
+						let message = JSON.parse(e.data);
+						vm.messageList.push(message);
+						vm.$nextTick(function() {
+							var div = document.getElementById('im-record');
+							div.scrollTop = div.scrollHeight;  //App.vue里注释掉貌似也没问题
+						})
+					}
 				}
 			}
 		}
