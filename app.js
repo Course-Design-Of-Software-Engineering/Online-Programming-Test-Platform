@@ -9,8 +9,8 @@ const socket = require('./router/socket')
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false)
 
-// mongoose.connect('mongodb://localhost/testdb'); // 设置了账号密码的数据库
-mongoose.connect('mongodb://admin:admin@localhost/platform'); // 没有设置账号密码的数据库
+ mongoose.connect('mongodb://localhost/testdb'); // 设置了账号密码的数据库
+//mongoose.connect('mongodb://admin:admin@localhost/platform'); // 没有设置账号密码的数据库
 
 var db = mongoose.connection;
 //db.on('error', console.error.bind(console, 'connection error:'));
