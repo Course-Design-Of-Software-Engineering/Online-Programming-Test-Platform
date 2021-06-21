@@ -5,7 +5,7 @@ var problem = require('../model/problem')
 var router = express.Router()
 
 // -----------------------socket test 报错就注释掉 但是不要删掉！！！！ dmj----------------------
-var http = require("http");
+/* var http = require("http");
 var express = require("express"); //引入express
 var socketIo = require("socket.io"); //引入socket.io
 
@@ -34,7 +34,7 @@ io.on("connection", function (clientSocket) {
         // 使用 emit 发送消息，broadcast 表示 除自己以外的所有已连接的socket客户端。
         clientSocket.broadcast.emit("receiveMsg", data);
     })
-});
+}); */
 // -----------------------socket test 报错就注释掉 但是不要删掉！！！！ dmj----------------------
 
 
@@ -63,7 +63,13 @@ router.post('/codingPage',(req, res)=>{
 //面试官新创建一个题目 
 router.post('/codingPage/createP',(req, res)=>{
 	//获取提交的题目信息
-	var newProblem = new problem(req.body.formContent)
+	//var newProblem = new problem(req.body.formContent)
+	//console.log("接收到的新建题目",newProblem)
+	//console.log("接收到的新建题目：",req.body.formContent)
+	var existedProblem = 10
+	existedProblem = existedProblem + 1 
+	var newId = "00" + existedProblem
+	console.log("newid:",newId)
 
 	//将新建题目存入数据库中并渲染编程界面展示题目内容
 	newProblem.save(function(err, data){
@@ -74,16 +80,20 @@ router.post('/codingPage/createP',(req, res)=>{
 			})
 		}else{
 			res.json({
-				status:'0',
-				msg:'题目创建成功！',
-				result:{
-					count:data.length,
-					List:data
-				}
+			  status:1, // 状态码应该为500 服务端出错
+			  msg:err.message
 			})
-		}
+		} 
+		else{ 
+		  res.json({
+			status:0, //修改成功
+		  })
+		} 
 	})
+	
+	
 })
+
 
 //面试者提交代码
 router.post('/codingPage/code',(req,res)=>{
