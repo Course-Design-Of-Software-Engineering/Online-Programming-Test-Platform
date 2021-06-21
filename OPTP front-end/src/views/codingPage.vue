@@ -222,7 +222,7 @@
 				socket: '',
 				msg: '',
 				messageList: [],
-				bridge: [uid, otherID]   //严格一对一聊天
+				bridge: [this.COMMON.user, this.$route.query.invEmail]   //严格一对一聊天
 			}
 		},
 		components: {
@@ -233,6 +233,7 @@
 		mounted() {
 			this.showQus();   //左边显示面试题
 			this.getNames();   //从数据库读取面试官和面试者的用户名（可能存在同步异步问题）
+			let vm = this;
 			this.conWebSocket();   //连接socket服务器
 			//设置不同身份的功能限制
 			if (this.COMMON.identity == '候选人') {
