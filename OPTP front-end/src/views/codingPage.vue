@@ -164,7 +164,7 @@
 				//左块的按钮显示属性
 				buttDisplay:'default',
 				//中部的按钮显示属性
-				buttDisplay2:'default'
+				buttDisplay2:'default',
 				codeLng: "C++",
 				// 题目表单
 				questionCnt: {
