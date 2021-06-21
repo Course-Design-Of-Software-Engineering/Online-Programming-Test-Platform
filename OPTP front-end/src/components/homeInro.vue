@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="divButton">
-				<el-button type="success" icon="el-icon-connection" plain round @click="enterItv">进入面试</el-button>
+				<el-button type="success" icon="el-icon-connection" plain round @click="enterItv">{{buttTip}}</el-button>
 			</div>
 		</el-main>
 	</div>
@@ -24,8 +24,15 @@
 		// 	userEmail: String
 		// },
 		props: ['userName', 'userEmail'],
+		data() {
+			return{
+				buttTip:'进入面试',
+				inviteEmail:''
+			}
+		},
 		methods: {
 			enterItv() {
+				if(this.COMMON.identity=='候选人'){
 				this.$confirm('确定进入面试吗？', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
@@ -43,6 +50,52 @@
 					// 	message: '取消'
 					// });
 				});
+			}
+			else{
+				this.$confirm('确定创建一个新面试吗？', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'success'
+				}).then(() => {
+					this.$prompt('请输入邮箱', '提示', {
+					          confirmButtonText: '确定',
+					          cancelButtonText: '取消',
+					          inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+					          inputErrorMessage: '邮箱格式不正确'
+					        }).then(({ value }) => {
+								this.inviteEmail=value;
+								//已获取提示框邮箱
+								//弹窗提示
+					          this.$message({
+					            type: 'success',
+					            message: '你的邮箱是: ' + value
+					          });
+							  //跳转进coding页面
+							  this.$router.push({
+							  		path:'/codingPage',
+							  		query:{
+							  			qusId: "0001"
+							  		}
+							  	});
+							  }).catch(() => {
+							  	// this.$message({
+							  	// 	type: 'info',
+							  	// 	message: '取消'
+							  	// });
+							  });
+					        }).catch(() => {
+					          this.$message({
+					            type: 'info',
+					            message: '取消输入'
+					          });       
+					        });
+				
+			}
+			}
+		},
+		mounted() {
+			if(this.COMMON.identity!='候选人'){
+				this.buttTip='创建面试';
 			}
 		}
 	}

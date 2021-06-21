@@ -24,11 +24,11 @@
 					<!-- <left :qid="questionId"></left> -->
 					<div>
 						<el-row style="text-align: left;margin-bottom: 0px;">
-							<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank()">从题库选择
+							<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank()" :style="[{display:buttDisplay}]">从题库选择
 							</el-button>
-							<el-button type="primary" size="medium" icon="el-icon-edit" @click="editQus()()">编辑题目
+							<el-button type="primary" size="medium" icon="el-icon-edit" @click="editQus()()" :style="[{display:buttDisplay}]">编辑题目
 							</el-button>
-							<el-button type="primary" plain size="medium" icon="el-icon-plus" @click="createQus()">新建
+							<el-button type="primary" plain size="medium" icon="el-icon-plus" @click="createQus()" :style="[{display:buttDisplay}]">新建
 							</el-button>
 						</el-row>
 						<div class="questionPart">
@@ -93,8 +93,8 @@
 							</el-form>
 						</div>
 						<div class="buttGroup">
-							<el-button type="primary" @click="submitForm('questionCnt')">提交编辑</el-button>
-							<el-button @click="cancelEdt()">取消</el-button>
+							<el-button type="primary" @click="submitForm('questionCnt')" :style="[{display:buttDisplay}]">提交编辑</el-button>
+							<el-button @click="cancelEdt()" :style="[{display:buttDisplay}]">取消 </el-button>
 						</div>
 					</div>
 				</el-col>
@@ -106,7 +106,7 @@
 					<!-- 编程板块 -->
 					<div>
 						<div style="text-align: left;">
-							<el-select v-model="mode" @change="changeMode" placeholder="请选择编程语言(默认JavaScript)">
+							<el-select v-model="mode" @change="changeMode" placeholder="请选择编程语言 (已默认js)">
 								<el-option label="C++" value="C++"></el-option>
 								<el-option label="Python" value="Python"></el-option>
 								<el-option label="JavaScript" value="JavaScript"></el-option>
@@ -115,7 +115,7 @@
 						</div>
 						<!-- 代码模块 -->
 						<div>
-							<button @click="test">change</button>
+							
 							<codemirror ref="mycode" v-model="curCode" :options="cmOptions" class="codeMirror">
 							</codemirror>
 							<button @click="printCode">print</button>
@@ -160,6 +160,7 @@
 				flag: true,
 				timeDemand: "O(n)",
 				spaceDemand: "nlogn",
+				buttDisplay:'default',
 				codeLng: "C++",
 				// 题目表单
 				questionCnt: {
@@ -193,6 +194,10 @@
 		},
 		mounted() {
 			this.showQus()
+			if(this.COMMON.identity=='候选人')
+			{
+				this.buttDisplay='none';
+			}
 		},
 		methods: {
 			backHome() {
