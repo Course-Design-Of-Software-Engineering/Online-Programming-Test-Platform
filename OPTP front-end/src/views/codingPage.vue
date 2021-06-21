@@ -298,11 +298,12 @@
 								console.log("status==0")
 								let infoResult = response.data.result.List
 								console.log(infoResult)
-								console.log(that.questionCnt.questionTitle)
+								console.log(infoResult.id)
 								that.$message({
 									message: `题目提交成功！`,
 									type: 'success'
 								});
+								that.questionId = infoResult.id;
 								that.showQus();
 								//that.flag = true;
 							} else {

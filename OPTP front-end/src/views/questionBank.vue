@@ -54,6 +54,9 @@
 				questionList: []
 			}
 		},
+		mounted() {
+			this.type1()
+		},
 		methods: {
 			//按钮传递类型
 			type1() {
