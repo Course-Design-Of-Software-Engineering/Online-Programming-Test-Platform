@@ -43,7 +43,7 @@ var server = ws.createServer(function(conn){
     if(obj.func === 'chat'){
       console.log("在chat")
       conns[''+obj.uid+''] = conn;
-    console.log("in conn text,conns:",conns)
+      console.log("in conn text,conns:",conns)
 
     //发送消息
     boardcast({
@@ -53,6 +53,7 @@ var server = ws.createServer(function(conn){
       uid: obj.uid,
       nickname: obj.nickname,
       bridge: obj.bridge,
+      func:'chat'
       //groupId: obj.groupId,
       //status: 1
     });
