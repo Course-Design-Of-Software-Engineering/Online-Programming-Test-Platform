@@ -42,6 +42,7 @@
 		methods: {
 			enterItv() {
 				//身份是候选人的时候
+				let vm=this;
 				console.log(this.COMMON.identity)
 				if (this.COMMON.identity == '候选人') {
 					this.$confirm('确定进入面试吗？', '提示', {
@@ -49,11 +50,12 @@
 						cancelButtonText: '取消',
 						type: 'success'
 					}).then(() => {
+						console.log('求求你了！',this.interviewerEmail);
 						this.$router.push({
 							path: '/codingPage',
 							query: {
 								qusId: "0001",
-								otherID:this.interviewerEmail
+								otherID:vm.interviewerEmail
 							}
 						});
 					}).catch(() => {
@@ -214,6 +216,7 @@
 					if (vm.receivedData.sender == 'interviewer') {
 						
 						vm.interviewerEmail=vm.receivedData.user;//获取面试官的邮箱
+						console.log('我改了！',vm.interviewerEmail);
 						vm.$confirm('确认加入面试?', '提示', {
 							confirmButtonText: '同意',
 							cancelButtonText: '拒绝',
@@ -260,6 +263,10 @@
 						}
 						//若面试者同意邀请
 						else {
+							if(vm.COMMON.identity=='候选人'){
+								console.log('111');
+							}
+							else{
 							vm.$alert('对方已同意面试！现在准备和对方共同进入面试。', '邀请面试结果', {
 								confirmButtonText: '进入面试',
 								callback: action => {
@@ -268,11 +275,12 @@
 										path: '/codingPage',
 										query: {
 											qusId: "0001",
-											otherID:this.inviteEmail
+											otherID:vm.inviteEmail
 										}
 									});
 								}
 							});
+						}
 						}
 					}
 				}

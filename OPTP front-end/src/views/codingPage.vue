@@ -152,8 +152,10 @@
 							</div>
 						</div>
 						<div class="footerIM">
-							<input type="text" v-model="msg" placeholder="请输入内容">
-							<button @click="send">发送</button>
+							<el-row>
+								<el-input type="text" v-model="msg" placeholder="请输入内容" style="width: 71%;"></el-input>
+								<el-button type="primary" @click="send">发送</el-button>
+							</el-row>
 						</div>
 					</div>
 				</el-col>
@@ -166,9 +168,9 @@
 	// import left from '../components/left.vue'
 	// import mid from '../components/mid.vue'
 	// import right from '../components/right.vue'
-	
+
 	import moment from 'moment' //用于在线聊天
-	
+
 	//codeMirror的引入
 	import {
 		codemirror
@@ -216,13 +218,17 @@
 				},
 				//聊天模块
 				uid: this.COMMON.user,
-				otherID: this.$route.query.invEmail,
-				userName: '',
+				otherID: '',
+				nickname: '',
 				otherName: '',
 				socket: '',
+				users: [],
+				groups: [],
+				groupId: '',
+				groupName: '',
 				msg: '',
 				messageList: [],
-				bridge: [this.COMMON.user, this.$route.query.invEmail]   //严格一对一聊天
+				bridge: [this.COMMON.user, this.otherID] //严格一对一聊天
 			}
 		},
 		components: {
@@ -231,10 +237,14 @@
 			//right
 		},
 		mounted() {
-			this.showQus();   //左边显示面试题
-			this.getNames();   //从数据库读取面试官和面试者的用户名（可能存在同步异步问题）
+			this.showQus(); //左边显示面试题
+			this.otherID=this.$route.query.otherID;
+			this.bridge[1]=this.otherID;
+			console.log('bridge',this.bridge);
+			console.log('currid',this.otherID);
+			this.getNames(); //从数据库读取面试官和面试者的用户名（可能存在同步异步问题）
 			let vm = this;
-			this.conWebSocket();   //连接socket服务器
+			this.conWebSocket(); //连接socket服务器
 			//设置不同身份的功能限制
 			if (this.COMMON.identity == '候选人') {
 				this.buttDisplay = 'none';
@@ -256,12 +266,12 @@
 				vm.socket.send(JSON.stringify({
 					uid: vm.uid,
 					type: 2,
-					nickname: vm.userName,
-					bridge: vm.bridge   //是否仅先向服务器发送[]？
+					nickname: vm.nickname,
+					bridge: vm.bridge //是否仅先向服务器发送[]？
 				}));
 			}
 		},
-		computed: {   //computed相当于带响应式依赖与缓存的method
+		computed: { //computed相当于带响应式依赖与缓存的method
 			currentMessage() {
 				let vm = this;
 				let data = vm.messageList.filter(item => {
@@ -452,7 +462,8 @@
 						} else {
 							console.log('userid:', that.COMMON.user)
 							console.log(detailResult)
-							that.userName = detailResult[0].username;
+							that.nickname = detailResult[0].username;
+							console.log(that.nickname)
 						}
 					}
 				}).catch(function(error) {
@@ -475,6 +486,7 @@
 							console.log('otherid:', that.otherID)
 							console.log(detailResult)
 							that.otherName = detailResult[0].username;
+							console.log(that.otherName)
 						}
 					}
 				}).catch(function(error) {
@@ -483,7 +495,7 @@
 			},
 			//触发发送消息事件
 			send() {
-				this.msg = this.msg.trim();  //检查输入框是否为空
+				this.msg = this.msg.trim(); //检查输入框是否为空
 				if (!this.msg) {
 					return
 				}
@@ -494,17 +506,20 @@
 					})
 					return;
 				}
-				this.sendMessage(100, this.msg)   //将消息发送至服务器，类型码为100
+				this.sendMessage(100, this.msg) //将消息发送至服务器，类型码为100
 			},
 			//将消息发送至服务器
 			sendMessage(type, msg) {
 				this.socket.send(JSON.stringify({
 					uid: this.uid,
 					type: type,
-					nickname: this.userName,
+					nickname: this.nickname,
 					msg: msg,
-					bridge: this.bridge
+					bridge: this.bridge,
+					func:'chat'
 				}));
+				console.log("sendMessage")
+				console.log(msg)
 				this.msg = '';
 			},
 			//连接socket服务器
@@ -515,16 +530,16 @@
 					let socket = vm.socket;
 					//连接建立时触发的WebSocket事件
 					socket.onopen = function(e) {
-						console.log("连接服务器成功");
+						console.log("连接服务器成功啦啦啦");
 						vm.$message({
 							type: 'success',
-							message: '连接服务器成功'
+							message: '连接服务器成功啦啦啦'
 						})
 						if (!vm.uid) {
 							vm.uid = 'web_im_' + moment().valueOf();
 							localStorage.setItem('WEB_IM_USER', JSON.stringify({
 								uid: vm.uid,
-								nickname: vm.userName
+								nickname: vm.nickname
 							}))
 						}
 						vm.sendMessage(1)
@@ -541,9 +556,13 @@
 					socket.onmessage = function(e) {
 						let message = JSON.parse(e.data);
 						vm.messageList.push(message);
+						console.log("接收服务器的消息");
+						console.log(message);
+						console.log(vm.messageList);
+						console.log("push(message)");
 						vm.$nextTick(function() {
 							var div = document.getElementById('im-record');
-							div.scrollTop = div.scrollHeight;  //App.vue里注释掉貌似也没问题
+							div.scrollTop = div.scrollHeight; //App.vue里注释掉貌似也没问题
 						})
 					}
 				}
@@ -604,4 +623,61 @@
 		float: inherit;
 		margin-bottom: 50px;
 	}
+	
+	.headerIM {
+		font-weight: bold;
+		font-size: 20px;
+		color: #44607C;
+	}
+	
+	.bodyIM {
+		padding: 10px 10px;
+		width: auto;
+		height: 520px;
+	}
+
+	.joinTips {
+		position: relative !important;
+		display: block;
+		color: #cccccc;
+		font-size: 10px;
+		text-align: center;
+		width: 100%;
+		left: 0 !important;
+		transform: none !important;
+	}
+
+	.liIM {
+		margin-bottom: 15px;
+		position: relative;
+		text-align: left;
+		color: #46b0ff;
+	}
+
+	.messageDate {
+		font-size: 16px;
+		color: #b9b8b8;
+	}
+
+	.messageBox {
+		line-height: 30px;
+		font-size: 20px;
+	}
+
+	.footerIM {
+		position: fixed;
+	}
+	
+/* 	.footerIM el-input {
+		padding: 15px;
+		font-size: 16px;
+	}
+
+	.footerIM el-button {
+		width: 66px;
+		background: #3da29b;
+		color: #fff;
+		font-size: 18px;
+		padding: 12px 10px;
+	} */
 </style>
