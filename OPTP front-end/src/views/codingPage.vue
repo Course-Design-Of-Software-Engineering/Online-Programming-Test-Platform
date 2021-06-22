@@ -23,7 +23,7 @@
 				<el-col :span="7">
 					<!-- <left :qid="questionId"></left> -->
 					<div>
-						<el-row style="text-align: left;margin-bottom: 0px;">
+						<el-row style="text-align: left;margin-bottom: 20px;">
 							<el-button type="info" size="medium" icon="el-icon-s-grid" @click="openBank()"
 								:style="[{display:buttDisplay}]">从题库选择
 							</el-button>
@@ -34,71 +34,83 @@
 								:style="[{display:buttDisplay}]">新建
 							</el-button>
 						</el-row>
-						<div class="questionPart">
-							<h4 class="leftH">题目信息</h4>
-							<el-divider></el-divider>
-							<!-- form表单 -->
-							<el-form :model="questionCnt" ref="questionCnt" label-width="95px" class="demo-ruleForm"
-								:disabled="flag">
-								<!-- 题目标题 -->
-								<el-form-item label="题目标题" :rules="[{ required: true, message: '题目标题不能为空'},]">
-									<el-input type="text" v-model="questionCnt.questionTitle"></el-input>
-								</el-form-item>
-								<!-- 题目类型 -->
-								<el-form-item label="题目类型">
-									<el-input v-model="questionCnt.questionType"
-										:rules="[{ required: true, message: '题目类型不能为空'},]"></el-input>
-								</el-form-item><!-- 代码语言 -->
-								<el-form-item label="代码语言">
-									<el-input v-model="codeLng"></el-input>
-								</el-form-item>
-								<!-- 时间复杂度 -->
-								<el-form-item label="时间复杂度">
-									<el-input v-model="timeDemand"></el-input>
-								</el-form-item>
-								<!-- 空间复杂度 -->
-								<el-form-item label="空间复杂度">
-									<el-input v-model="spaceDemand"></el-input>
-								</el-form-item>
-							</el-form>
-						</div>
-						<div class="questionPart">
-							<h4 class="leftH">题目叙述</h4>
-							<el-divider></el-divider>
-							<p class="info_qusDescription">{{ questionDescription }}</p>
-							<!-- form表单 -->
-							<el-form :model="questionCnt" ref="questionCnt" class="demo-ruleForm" :disabled="flag">
-								<!-- 题目叙述 -->
-								<el-form-item label="" :rules="[{ required: true, message: '题目叙述不能为空'},]">
-									<el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}"
-										v-model="questionCnt.questionDescription" style="margin-left: 15%;"></el-input>
-								</el-form-item>
-							</el-form>
-						</div>
-						<div class="questionPart">
-							<h4 class="leftH">示例</h4>
-							<el-divider></el-divider>
-							<!-- form表单 -->
-							<el-form :model="questionCnt" ref="questionCnt" label-width="95px" class="demo-ruleForm"
-								:disabled="flag">
-								<!-- 输入示例 -->
-								<el-form-item label="输入示例">
-									<el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}"
-										v-model="questionCnt.sample_in"
-										:rules="[{ required: true, message: '输入示例不能为空'},]"></el-input>
-								</el-form-item>
-								<!-- 输出示例 -->
-								<el-form-item label="输出示例">
-									<el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}"
-										v-model="questionCnt.sample_out"
-										:rules="[{ required: true, message: '输出示例不能为空'},]"></el-input>
-								</el-form-item>
-							</el-form>
-						</div>
-						<div class="buttGroup">
-							<el-button type="primary" @click="submitForm('questionCnt')"
-								:style="[{display:buttDisplay}]">提交编辑</el-button>
-							<el-button @click="cancelEdt()" :style="[{display:buttDisplay}]">取消 </el-button>
+						<div>
+							<div class="questionPart">
+								<h4 class="leftH">题目信息</h4>
+								<el-divider></el-divider>
+								<!-- form表单 -->
+								<el-form :model="questionCnt" ref="questionCnt" label-width="95px" class="demo-ruleForm"
+									:disabled="flag">
+									<!-- 题目标题 -->
+									<el-form-item label="题目标题" :rules="[{ required: true, message: '题目标题不能为空'},]">
+										<el-input type="text" v-model="questionCnt.questionTitle"></el-input>
+									</el-form-item>
+									<!-- 题目类型 -->
+									<el-form-item label="题目类型" :rules="[{ required: true, message: '题目类型不能为空'},]">
+										<!-- <el-input v-model="questionCnt.questionType"
+											:rules="[{ required: true, message: '题目类型不能为空'},]"></el-input> -->
+										<el-select v-model="questionCnt.questionType">
+										      <el-option label="算法" value="算法"></el-option>
+										      <el-option label="SQL" value="SQL"></el-option>
+											  <el-option label="前端" value="前端"></el-option>
+										</el-select>
+									</el-form-item><!-- 代码语言 -->
+									<el-form-item label="代码语言">
+										<!-- <el-input v-model="codeLng"></el-input> -->
+										<el-select v-model="codeLng">
+										      <el-option label="C++" value="C++"></el-option>
+										      <el-option label="Python" value="Python"></el-option>
+											  <el-option label="JavaScript" value="JavaScript"></el-option>
+											  <el-option label="Shell" value="Shell"></el-option>
+										</el-select>
+									</el-form-item>
+									<!-- 时间复杂度 -->
+									<el-form-item label="时间复杂度">
+										<el-input v-model="timeDemand"></el-input>
+									</el-form-item>
+									<!-- 空间复杂度 -->
+									<el-form-item label="空间复杂度">
+										<el-input v-model="spaceDemand"></el-input>
+									</el-form-item>
+								</el-form>
+							</div>
+							<div class="questionPart">
+								<h4 class="leftH">题目叙述</h4>
+								<el-divider></el-divider>
+								<p class="info_qusDescription">{{ questionDescription }}</p>
+								<!-- form表单 -->
+								<el-form :model="questionCnt" ref="questionCnt" class="demo-ruleForm" :disabled="flag">
+									<!-- 题目叙述 -->
+									<el-form-item label="" :rules="[{ required: true, message: '题目叙述不能为空'},]">
+										<el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}"
+											v-model="questionCnt.questionDescription" style="margin-left: 15%;">
+										</el-input>
+									</el-form-item>
+								</el-form>
+							</div>
+							<div class="questionPart">
+								<h4 class="leftH">示例</h4>
+								<el-divider></el-divider>
+								<!-- form表单 -->
+								<el-form :model="questionCnt" ref="questionCnt" label-width="95px" class="demo-ruleForm"
+									:disabled="flag">
+									<!-- 输入示例 -->
+									<el-form-item label="输入示例" :rules="[{ required: true, message: '输入示例不能为空'},]">
+										<el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}"
+											v-model="questionCnt.sample_in"></el-input>
+									</el-form-item>
+									<!-- 输出示例 -->
+									<el-form-item label="输出示例" :rules="[{ required: true, message: '输出示例不能为空'},]">
+										<el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}"
+											v-model="questionCnt.sample_out"></el-input>
+									</el-form-item>
+								</el-form>
+							</div>
+							<div class="buttGroup">
+								<el-button type="primary" @click="submitForm('questionCnt')"
+									:style="[{display:buttDisplay}]">提交编辑</el-button>
+								<el-button @click="cancelEdt()" :style="[{display:buttDisplay}]">取消 </el-button>
+							</div>
 						</div>
 					</div>
 				</el-col>
@@ -168,7 +180,7 @@
 	// import left from '../components/left.vue'
 	// import mid from '../components/mid.vue'
 	// import right from '../components/right.vue'
-
+	import global from '../global.vue'
 	import moment from 'moment' //用于在线聊天
 
 	//codeMirror的引入
@@ -218,7 +230,7 @@
 				},
 				//聊天模块
 				uid: this.COMMON.user,
-				otherID: '',
+				otherID: this.COMMON.other,
 				nickname: '',
 				otherName: '',
 				socket: '',
@@ -228,7 +240,7 @@
 				groupName: '',
 				msg: '',
 				messageList: [],
-				bridge: [this.COMMON.user, this.otherID] //严格一对一聊天
+				bridge: [this.COMMON.user, this.COMMON.other] //严格一对一聊天
 			}
 		},
 		components: {
@@ -238,10 +250,8 @@
 		},
 		mounted() {
 			this.showQus(); //左边显示面试题
-			this.otherID=this.$route.query.otherID;
-			this.bridge[1]=this.otherID;
-			console.log('bridge',this.bridge);
-			console.log('currid',this.otherID);
+			console.log('bridge', this.bridge);
+			console.log('currid', this.otherID);
 			this.getNames(); //从数据库读取面试官和面试者的用户名（可能存在同步异步问题）
 			let vm = this;
 			this.conWebSocket(); //连接socket服务器
@@ -472,7 +482,7 @@
 				//获取聊天的另一个用户的名字
 				this.$axios.get('/api/user_center', {
 					params: {
-						email: this.otherID
+						email: this.COMMON.other
 					}
 				}).then(function(response) {
 					if (response.data.status == '0') {
@@ -516,7 +526,7 @@
 					nickname: this.nickname,
 					msg: msg,
 					bridge: this.bridge,
-					func:'chat'
+					func: 'chat'
 				}));
 				console.log("sendMessage")
 				console.log(msg)
@@ -530,10 +540,10 @@
 					let socket = vm.socket;
 					//连接建立时触发的WebSocket事件
 					socket.onopen = function(e) {
-						console.log("连接服务器成功啦啦啦");
+						console.log("连接服务器成功啦");
 						vm.$message({
 							type: 'success',
-							message: '连接服务器成功啦啦啦'
+							message: '连接服务器成功啦'
 						})
 						if (!vm.uid) {
 							vm.uid = 'web_im_' + moment().valueOf();
@@ -546,51 +556,50 @@
 					}
 					//连接关闭时触发的WebSocket事件
 					socket.onclose = function(e) {
-						console.log("服务器关闭");
+						console.log("服务器关闭啦");
 					}
 					//通信发生错误时触发的WebSocket事件
 					socket.onerror = function() {
-						console.log("连接出错");
+						console.log("连接出错啦");
 					}
 					//客户端接收服务端数据时触发的WebSocket事件（接收服务器的消息）
 					socket.onmessage = function(e) {
+						console.log('CPreceived:', e.data);
 						let message = JSON.parse(e.data);
-						if(message.func=='chat'){
-						vm.messageList.push(message);
-						console.log("接收服务器的消息");
-						console.log(message);
-						console.log(vm.messageList);
-						console.log("push(message)");
-						vm.$nextTick(function() {
-							var div = document.getElementById('im-record');
-							div.scrollTop = div.scrollHeight; //App.vue里注释掉貌似也没问题
-						})
-						}
-						else if(message.func=='code'){
-							vm.curCode=message.code;
+						console.log('message.func:', message.func);
+						if (message.func == 'chat') {
+							vm.messageList.push(message);
+							console.log("接收服务器的消息");
+							console.log(message);
+							console.log(vm.messageList);
+							console.log("push(message)");
+							vm.$nextTick(function() {
+								var div = document.getElementById('im-record');
+								div.scrollTop = div.scrollHeight; //App.vue里注释掉貌似也没问题
+							})
+						} else if (message.func == 'code') {
+							vm.curCode = message.code;
 						}
 					}
 				}
 			}
-		
-	},
-	watch:{
-   //监听到页面代码变动，就执行send通信
 
-		curCode(val,oldVal){
-			let vm=this;
-		if(vm.COMMON.identity=='候选人'){
-    	
-    	vm.socket.send(JSON.stringify({
-    	user:vm.COMMON.user,
-    	code:vm.curCode,
-     	bridge: [vm.otherID,vm.COMMON.user],
-     	func: 'code'
-    	}));
+		},
+		watch: {
+			//监听到页面代码变动，就执行send通信
+			curCode(val, oldVal) {
+				let vm = this;
+				if(vm.COMMON.identity=='候选人'){
+					vm.socket.send(JSON.stringify({
+						user: vm.COMMON.user,
+						code: vm.curCode,
+						bridge: [vm.otherID, vm.COMMON.user],
+						func: 'code'
+					}));
+				}
+			}
 		}
-   	}
-}
-}
+	}
 </script>
 
 <style scoped="true">
@@ -619,9 +628,13 @@
 		height: 55em;
 		margin: 3px;
 	}
-
+	
+	.questionPart {
+		margin: 10px, 0px;
+	}
+	
 	.leftH {
-		margin-top: 30px;
+		margin-top: 5px;
 	}
 
 	.leftQp {
@@ -645,13 +658,13 @@
 		float: inherit;
 		margin-bottom: 50px;
 	}
-	
+
 	.headerIM {
 		font-weight: bold;
 		font-size: 20px;
 		color: #44607C;
 	}
-	
+
 	.bodyIM {
 		padding: 10px 10px;
 		width: auto;
@@ -676,8 +689,14 @@
 		color: #46b0ff;
 	}
 
-	.messageDate {
+	.mNickname {
 		font-size: 16px;
+		color: #333333;
+		font-weight: 500;
+	}
+
+	.messageDate {
+		font-size: 14px;
 		color: #b9b8b8;
 	}
 
@@ -689,17 +708,4 @@
 	.footerIM {
 		position: fixed;
 	}
-	
-/* 	.footerIM el-input {
-		padding: 15px;
-		font-size: 16px;
-	}
-
-	.footerIM el-button {
-		width: 66px;
-		background: #3da29b;
-		color: #fff;
-		font-size: 18px;
-		padding: 12px 10px;
-	} */
 </style>

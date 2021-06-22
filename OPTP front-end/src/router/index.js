@@ -12,6 +12,7 @@ import historyQuestion from '../views/historyQuestion.vue'
 import codingPage from '../views/codingPage.vue'
 import questionBank from '../views/questionBank.vue'
 import questionDetail from '../views/questionDetail.vue'
+import global from '../global.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,12 @@ Vue.use(VueRouter)
 const auth = {
 	islogin() {
 		// return false
-		return true
+		// return true
+		if (global.user == '') {
+			return false
+		} else {
+			return true
+		}
 	}
 }
 

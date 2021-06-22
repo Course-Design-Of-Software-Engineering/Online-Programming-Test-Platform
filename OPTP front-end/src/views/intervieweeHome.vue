@@ -29,6 +29,7 @@
 		methods: {
 			showName() {
 				var that = this;
+				console.log('userid:', that.COMMON.user);
 				this.$axios.get('/api/user_center', {
 					params: {
 						email: this.COMMON.user

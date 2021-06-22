@@ -3,8 +3,12 @@
 
 <script>
 	let user = '';
+	let identity = '';
+	let other = '';
 	export default {
-		user
+		user,
+		identity,
+		other
 	}
 </script>
 
