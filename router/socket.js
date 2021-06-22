@@ -39,11 +39,20 @@ var server = ws.createServer(function(conn){
   console.log("在serve")
   conn.on("text", function (obj) {
     obj = JSON.parse(obj)
-
-    if(obj.func === 'chat'){
+    
+    if(obj.func === 'code'){
+      console.log("在code")
+      interviewer = user_invite.filter((item)=>{
+        return item === obj.bridge[0];
+      });
+      interviewer.forEach((item)=>{
+        conns[item].send(JSON.stringify(obj));
+      })
+    }
+    else if(obj.func === 'chat'){
       console.log("在chat")
       conns[''+obj.uid+''] = conn;
-      console.log("in conn text,conns:",conns)
+    console.log("in conn text,conns:",conns)
 
     //发送消息
     boardcast({
@@ -127,8 +136,6 @@ var server = ws.createServer(function(conn){
     }
     else if(obj.func ==='invite'){
     console.log('11进入invite了！')
-      if(obj.func === 'invite'){
-        console.log('22进入invite了！')
         conns_invite[''+obj.user+''] = conn;
         user_invite.push(obj.user)
         switch(obj.sender){
@@ -139,10 +146,6 @@ var server = ws.createServer(function(conn){
             interviewee = user_invite.filter((item)=>{
               return item === obj.bridge[1];
             });
-            console.log('bridge',obj.bridge)
-            console.log('2',user_invite)
-            console.log('3',obj.bridge[1])
-            console.log('4',interviewee)
             interviewee.forEach((item)=>{
               conns_invite[item].send(JSON.stringify(obj));
             })
@@ -158,7 +161,11 @@ var server = ws.createServer(function(conn){
             })
           }
         }
-      }
+    }
+    else if(obj.func === 'problem'){
+      console.log("在problem")
+      interviewee = ''+obj.bridge[1]+'';
+      conns[interviewee].send(JSON.stringify(obj));
     }
   })
   // conn.on('invite',function (obj) {

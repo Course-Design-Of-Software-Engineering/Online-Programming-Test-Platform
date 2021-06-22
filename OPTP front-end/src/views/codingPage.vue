@@ -555,6 +555,7 @@
 					//客户端接收服务端数据时触发的WebSocket事件（接收服务器的消息）
 					socket.onmessage = function(e) {
 						let message = JSON.parse(e.data);
+						if(message.func=='chat'){
 						vm.messageList.push(message);
 						console.log("接收服务器的消息");
 						console.log(message);
@@ -564,11 +565,32 @@
 							var div = document.getElementById('im-record');
 							div.scrollTop = div.scrollHeight; //App.vue里注释掉貌似也没问题
 						})
+						}
+						else if(message.func=='code'){
+							vm.curCode=message.code;
+						}
 					}
 				}
 			}
+		
+	},
+	watch:{
+   //监听到页面代码变动，就执行send通信
+
+		curCode(val,oldVal){
+			let vm=this;
+		if(vm.COMMON.identity=='候选人'){
+    	
+    	vm.socket.send(JSON.stringify({
+    	user:vm.COMMON.user,
+    	code:vm.curCode,
+     	bridge: [vm.otherID,vm.COMMON.user],
+     	func: 'code'
+    	}));
 		}
-	}
+   	}
+}
+}
 </script>
 
 <style scoped="true">

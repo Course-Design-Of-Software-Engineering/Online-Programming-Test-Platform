@@ -12,7 +12,7 @@
 			</div>
 <!-- 			<p>{{condition}}</p> -->
 			<div class="divButton">
-				<el-button type="success" icon="el-icon-connection" :style="[{display:initDisplay}]" plain round
+				<el-button type="success" icon="el-icon-connection" v-show="initDisplay" plain round
 					@click="enterItv">{{buttTip}}
 				</el-button>
 			</div>
@@ -34,7 +34,7 @@
 				//面试官邮箱
 				interviewerEmail: '',
 				socket: '',
-				initDisplay:'default',
+				initDisplay:false,
 				receivedData:'',
 				condition:''
 			}
@@ -151,7 +151,7 @@
 					vm.socket = new WebSocket('ws://localhost:8001');
 					let socket = vm.socket;
 
-					socket.onopen = function(e) {
+					socket.onopen = function() {
 						console.log("连接服务器成功");
 						vm.$message({
 							type: 'success',
@@ -173,7 +173,7 @@
 						}))
 
 					}
-					socket.onclose = function(e) {
+					socket.onclose = function() {
 						console.log("服务器关闭");
 					}
 					socket.onerror = function() {
@@ -188,7 +188,7 @@
 					}
 				}},
 				//创建面试后，面试官发送的消息
-				sendMessageInterviewer(msg) {
+				sendMessageInterviewer() {
 					console.log("in sendMessage")
 					let vm=this;
 					this.socket.send(JSON.stringify({
@@ -201,15 +201,18 @@
 				}
 
 			},
-			mounted() {
+			beforeMount(){
 				if (this.COMMON.identity != '候选人') {
 					this.buttTip = '创建面试';
-					this.initDisplay = 'default';
+					this.initDisplay = true;
 				}
+			},
+			mounted() {
+				
 				this.conWebSocket();
 				},
 				watch: {
-					condition(val,oldVal){
+					condition(){
 						console.log('watching');
 					let vm=this;
 					//若是面试官发来消息（面试者接收视角）
@@ -237,7 +240,7 @@
 								message: '加入面试成功!请点击进入面试按钮尽快开始面试',
 							});
 							//显示进入面试的按钮
-							vm.initDisplay = 'default';
+							vm.initDisplay = true;
 						}).catch(() => {
 							//拒绝加入面试
 							vm.socket.send(JSON.stringify({
