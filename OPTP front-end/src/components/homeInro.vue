@@ -52,7 +52,8 @@
 						this.$router.push({
 							path: '/codingPage',
 							query: {
-								qusId: "0001"
+								qusId: "0001",
+								otherID:this.interviewerEmail
 							}
 						});
 					}).catch(() => {
@@ -266,7 +267,8 @@
 									vm.$router.push({
 										path: '/codingPage',
 										query: {
-											qusId: "0001"
+											qusId: "0001",
+											otherID:this.inviteEmail
 										}
 									});
 								}
