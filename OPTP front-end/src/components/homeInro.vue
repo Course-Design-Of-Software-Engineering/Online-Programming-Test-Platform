@@ -10,6 +10,7 @@
 					<p id="email">{{ userEmail }}</p>
 				</div>
 			</div>
+<!-- 			<p>{{condition}}</p> -->
 			<div class="divButton">
 				<el-button type="success" icon="el-icon-connection" :style="[{display:initDisplay}]" plain round
 					@click="enterItv">{{buttTip}}
@@ -33,7 +34,9 @@
 				//面试官邮箱
 				interviewerEmail: '',
 				socket: '',
-				initDisplay:'default'
+				initDisplay:'default',
+				receivedData:'',
+				condition:''
 			}
 		},
 		methods: {
@@ -177,70 +180,8 @@
 					socket.onmessage = function(e) {
 						console.log('received:', e.data);
 						console.log(typeof(e.data));
-						let receivedData=JSON.parse(e.data);
-						//若是面试官发来消息（面试者接收视角）
-						if (receivedData.sender == 'interviewer') {
-							
-							vm.interviewerEmail=receivedData.user;//获取面试官的邮箱
-							vm.$confirm('确认加入面试?', '提示', {
-								confirmButtonText: '同意',
-								cancelButtonText: '拒绝',
-								type: 'warning'
-							}).then(() => {
-								
-								//同意加入面试
-								vm.socket.send(JSON.stringify({
-									user:vm.COMMON.user,
-									condition: 'agree',
-									bridge: [vm.COMMON.user, vm.interviewerEmail],
-									sender: 'interviewee',
-									func: 'invite'
-								}))
-								vm.$message({
-									type: 'success',
-									message: '加入面试成功!请点击进入面试按钮尽快开始面试',
-								});
-								//显示进入面试的按钮
-								vm.initDisplay = 'default';
-							}).catch(() => {
-								//拒绝加入面试
-								vm.socket.send(JSON.stringify({
-									user: vm.COMMON.user,
-									condition: 'refuse',
-									bridge: [vm.COMMON.user, vm.interviewerEmail],
-									sender: 'interviewee',
-									func: 'invite'
-								}))
-								vm.$message({
-									type: 'info',
-									message: '已拒绝面试邀请'
-								});
-							});
-						}
-						//若是面试者发来消息（面试官接收视角）
-						else {
-							//若面试者拒绝邀请
-							if (receivedData.condition =='refuse') {
-								vm.$alert('很抱歉，对方已拒绝面试，请再和对方交流！', '邀请面试结果', {
-									confirmButtonText: '知道了'
-								});
-							}
-							//若面试者同意邀请
-							else {
-								vm.$alert('对方已同意面试！现在准备和对方共同进入面试。', '邀请面试结果', {
-									confirmButtonText: '进入面试',
-									callback: action => {
-										//跳转进coding页面
-										vm.$router.push({
-											path: '/codingPage',
-											query: {
-												qusId: "0001"
-											}
-										});
-									}
-								});
-							}
-						}
+						vm.receivedData=JSON.parse(e.data);
+						vm.condition=vm.receivedData.condition;
 					}
 				}},
 				//创建面试后，面试官发送的消息
@@ -263,8 +204,80 @@
 					this.initDisplay = 'default';
 				}
 				this.conWebSocket();
+				},
+				watch: {
+					condition(val,oldVal){
+						console.log('watching');
+					let vm=this;
+					//若是面试官发来消息（面试者接收视角）
+					if (vm.receivedData.sender == 'interviewer') {
+						
+						vm.interviewerEmail=vm.receivedData.user;//获取面试官的邮箱
+						vm.$confirm('确认加入面试?', '提示', {
+							confirmButtonText: '同意',
+							cancelButtonText: '拒绝',
+							type: 'warning'
+						}).then(() => {
+							console.log('我提前了');
+							//同意加入面试
+							vm.socket.send(JSON.stringify({
+								user:vm.COMMON.user,
+								condition: 'agree',
+								bridge: [vm.COMMON.user, vm.interviewerEmail],
+								sender: 'interviewee',
+								func: 'invite'
+							}))
+							console.log('中间');
+							vm.$message({
+								type: 'success',
+								message: '加入面试成功!请点击进入面试按钮尽快开始面试',
+							});
+							//显示进入面试的按钮
+							vm.initDisplay = 'default';
+						}).catch(() => {
+							//拒绝加入面试
+							vm.socket.send(JSON.stringify({
+								user: vm.COMMON.user,
+								condition: 'refuse',
+								bridge: [vm.COMMON.user, vm.interviewerEmail],
+								sender: 'interviewee',
+								func: 'invite'
+							}))
+							vm.$message({
+								type: 'info',
+								message: '已拒绝面试邀请'
+							});
+						});
+					}
+					//若是面试者发来消息（面试官接收视角）
+					else {
+						//若面试者拒绝邀请
+						if (vm.receivedData.condition =='refuse') {
+							vm.$alert('很抱歉，对方已拒绝面试，请再和对方交流！', '邀请面试结果', {
+								confirmButtonText: '知道了'
+							});
+						}
+						//若面试者同意邀请
+						else {
+							vm.$alert('对方已同意面试！现在准备和对方共同进入面试。', '邀请面试结果', {
+								confirmButtonText: '进入面试',
+								callback: action => {
+									//跳转进coding页面
+									vm.$router.push({
+										path: '/codingPage',
+										query: {
+											qusId: "0001"
+										}
+									});
+								}
+							});
+						}
+					}
+				}
+				}
+				
 			}
-		}
+		
 </script>
 
 <style scoped>
